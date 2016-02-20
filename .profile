@@ -8,7 +8,7 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-USER_CFG_DIR=`$HOME/.config_private`
+USER_CFG_DIR=$HOME/.config_private
 echo "USER_CFG_DIR is: $USER_CFG_DIR"
 
 # if running bash

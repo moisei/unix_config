@@ -1,5 +1,6 @@
 USER_CFG_DIR=$HOME/.config_private
 
+# bash
 alias a="alias"
 alias ra="source $USER_CFG_DIR/.bash_aliases"
 alias ea="pico $USER_CFG_DIR/.bash_aliases"
@@ -21,6 +22,7 @@ alias h='history'
 alias hg='history | grep -i'
 alias hl='history | tail -n 1'
 
+# git
 alias gst='git status'
 alias gl='git pull'
 alias gp='git push'
@@ -37,7 +39,110 @@ alias gcotb='git checkout --track -b'
 alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
 
+# docker
 
-source "$USER_CFG_DIR/.docker_aliases"
+# Docker Machine
+alias docker="sudo docker"
 
+alias dmachine='cd ~/Downloads/dmachine'
+alias dm='sudo docker-machine '
+alias dml='docker-machine ls '
+alias devstar='docker-machine start dev'
+alias denv='env | grep  DOCKER'
+alias dkenv='eval "$(sudo docker-machine env dev)"'
+alias dmc='docker-machine create '
+alias dmip='docker-machine ip '
+alias dmub='docker run -d -p ubuntu /bin/bash'
+alias dmstar='docker-machine start '
+alias dmstop='docker-machine stop '
+alias mstar='docker-machine start '
+alias mstop='docker-machine stop '
+
+#Get IP addresses
+dockexecl() { docker exec -i -t $(docker ps -l -q) bash ;}
+dockexec() { docker exec -i -t $@ bash ;}
+alias dockip='docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
+alias dockipl='docker inspect --format "{{ .NetworkSettings.IPAddress }}" $(docker ps -q)'
+alias dip='docker inspect --format "{{ .NetworkSettings.IPAddress }}" '
+alias dipl='docker inspect --format "{{ .NetworkSettings.IPAddress }}" $(docker ps -q)'
+
+# Start/Stop the last container created
+alias mstar1='docker-machine start $(docker-machine ls | tail -1 | awk "{print $1}")'
+alias mstop1='docker-machine stop $(docker-machine ls | tail -1 | awk "{print $1}")'
+alias dmk='docker-machine kill'
+
+# Inspect the last container created
+alias dmin='docker-machine inspect $(docker-machine ls | tail -1 | awk "{print $1}")'
+
+# Remove the last container created
+alias dmrm='docker-machine rm $(docker-machine ls | tail -1 | awk "{print $1}")'
+
+# Docker Engine aliases
+alias d='docker '
+alias di='docker images'
+alias di5='docker images | head -n5'
+alias dl='docker logs '
+alias dlf='docker logs -f'
+alias dri='docker rmi '
+alias dr='docker rm '
+alias dls='docker ps -a '
+alias dlsl='docker ps -l '
+alias dac='sudo  docker attach '
+
+# Inspect the last container created
+alias dmin='docker-machine inspect $(docker-machine ls | tail -1 | awk "{print $1}")'
+# Delete all containers matching the passed paramater
+# Example: "delcon ubuntu" or 'anything matching in docker ps output'
+delcon() { docker rm -f $(docker ps  -a | grep $@ | awk '{print $1}') ;}
+# Stop all containers matching the passed paramater.
+stopcon() { docker stop $(docker ps  -a | grep $@ | awk '{print $1}') ;}
+alias da='sudo  docker attach --sig-proxy=false '
+alias dtop='docker stop '
+alias dstar='docker start '
+alias dstart='docker start '
+alias din='docker inspect '
+alias dp='docker port $(docker ps -l -q)'
+alias db='docker build -t '
+alias dbc='docker build -t --no-cache '
+#alias drm='docker ps -l -q | xargs docker stop | xargs docker rm'
+
+alias dexec='docker exec '
+dexl() { docker exec -i -t $(docker ps -l -q)  bash ;}
+dex() { docker exec -i -t $@ bash ;}
+alias dlog='docker logs $(docker ps -l -q)'
+alias drun='docker run -i -t -name '
+alias dport='docker port $(docker ps -l -q)'
+
+# On demand foreground OS bash shells that delete on shell exit
+alias ubunturm='docker run -it --rm ubuntu'
+alias debianrm='docker run -it --rm debian'
+alias fedorarm='docker run -it --rm fedora'
+alias centosrm='docker run -it --rm centos'
+alias busyrm='docker run -it --rm busybox'
+alias nethostrm='docker run -it --rm --net=host ubuntu'
+
+# On demand foreground OS bash shells that stops on shell exit
+alias ubuntu='docker run -it ubuntu'
+alias debian='docker run -it debian'
+alias fedora='docker run -it fedora'
+alias busy='docker run -it busybox'
+alias nethost='docker run -it --net=host ubuntu'
+
+# On demand background OS bash shells running in daemon mode
+alias ubuntud='docker run -itd ubuntu'
+alias debiand='docker run -itd debian'
+alias fedorad='docker run -itd fedora'
+alias busyd='docker run -itd busybox'
+
+# Delete all containers matching the passed paramater
+delimg() { docker rmi $(docker images | grep $@ | awk '{print $3}') ;}
+# Delete all with a <none> label
+delnone() { docker rmi $(docker images | grep none | awk '{print $3}') ;}
+
+
+#alias dps="docker ps"
+alias dpsa="docker ps -a"
+
+alias dps='docker ps     --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Command}}"'
+alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Command}}"'
 

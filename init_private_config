@@ -1,7 +1,5 @@
 git clone  https://github.com/moisei/unix_config.git ~/.config_private
 mkdir ~/.config_original
-mv ~/.profile ~/.bashrc ~/.config_original
-ln -s ~/.config_private/.profile ~/.profile
-
-
-
+mv ~/.profile ~/.bashrc  ~/.gitconfig ~/.config_original
+ln -s ~/.config_private/bash/profile ~/.profile
+ln -s ~/.config_private/git/gitconfig  ~/.gitconfig

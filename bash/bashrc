@@ -103,8 +103,8 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 
-if [ -f ~/.config_private/.bash_aliases ]; then
-    . ~/.config_private/.bash_aliases
+if [ -f ~/.config_private/bash/bash_aliases ]; then
+    . ~/.config_private/bash/bash_aliases
 fi
 
 

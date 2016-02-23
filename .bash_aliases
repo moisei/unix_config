@@ -10,7 +10,15 @@ alias rmdir="rm -rf"
 
 alias g="grep"
 alias gi="grep -i"
+alias gv="grep -v"
+alias gvi="grep -vi"
+
+alias +="more"
+
 alias cd..="cd .."
 
+alias h='history'
+alias hg='history | grep -i'
+alias hl='history | tail -n 1'
 
 source "$USER_CFG_DIR/.docker_aliases"

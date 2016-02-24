@@ -2,8 +2,8 @@ USER_CFG_DIR=$HOME/.config_private
 
 # bash
 alias a="alias"
-alias ra="source $USER_CFG_DIR/.bash_aliases"
-alias ea="pico $USER_CFG_DIR/.bash_aliases"
+alias ra="source $USER_CFG_DIR/bash/bash_aliases"
+alias ea="pico $USER_CFG_DIR/bash/bash_aliases"
 
 alias del="rm"
 alias ren="mv"
@@ -143,6 +143,7 @@ delnone() { docker rmi $(docker images | grep none | awk '{print $3}') ;}
 #alias dps="docker ps"
 alias dpsa="docker ps -a"
 
-alias dps='docker ps     --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Command}}"'
-alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Command}}"'
+alias dps='docker ps     --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Image | printf \"%-20s\"}}{{.Command}}"'
+alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Image | printf \"%-20s\"}}{{.Command}}"'
 
+alias dsl='docker start $@ && docker logs $@'

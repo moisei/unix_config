@@ -141,9 +141,9 @@ delnone() { docker rmi $(docker images | grep none | awk '{print $3}') ;}
 
 
 #alias dps="docker ps"
-alias dpsa="docker ps -a"
+#alias dpsa="docker ps -a"
 
-alias dps='docker ps     --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Image | printf \"%-20s\"}}{{.Command}}"'
-alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}{{.Status | printf \"%-20s\"}}{{.Image | printf \"%-20s\"}}{{.Command}}"'
+alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | printf \"%-40.40s\"}} {{.Command}}"'
+alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}  {{.Status | printf \"%-20.20s\"}}  {{.Image | printf \"%-40.40s\"}}  {{.Command}}" | sort -k 2,2 -k 1,1 -r'
 
 alias dsl='docker start $@ && docker logs $@'

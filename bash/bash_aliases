@@ -61,6 +61,9 @@ alias mstop='docker-machine stop '
 #Get IP addresses
 dockexecl() { docker exec -i -t $(docker ps -l -q) bash ;}
 dockexec() { docker exec -i -t $@ bash ;}
+#dock_run_exec() { docker rm -fv $@; docker run -d --name $@ $@ && sleep 2 && docker exec -it $@ bash ;}
+#alias drbash='dock_run_exec'
+alias dbash='dockexec'
 alias dockip='docker inspect --format "{{ .NetworkSettings.IPAddress }}"'
 alias dockipl='docker inspect --format "{{ .NetworkSettings.IPAddress }}" $(docker ps -q)'
 alias dip='docker inspect --format "{{ .NetworkSettings.IPAddress }}" '
@@ -97,7 +100,7 @@ delcon() { docker rm -f $(docker ps  -a | grep $@ | awk '{print $1}') ;}
 # Stop all containers matching the passed paramater.
 stopcon() { docker stop $(docker ps  -a | grep $@ | awk '{print $1}') ;}
 alias da='sudo  docker attach --sig-proxy=false '
-alias dtop='docker stop '
+alias dstop='docker stop '
 alias dstar='docker start '
 alias dstart='docker start '
 alias din='docker inspect '
@@ -109,6 +112,8 @@ alias dbc='docker build -t --no-cache '
 alias dexec='docker exec '
 dexl() { docker exec -i -t $(docker ps -l -q)  bash ;}
 dex() { docker exec -i -t $@ bash ;}
+alias dbash='dex'
+#dbash() {docker exec -it $@ bash --init-file <(echo ". \"$HOME/.bashrc\"; export TERM=xterm")}
 alias dlog='docker logs $(docker ps -l -q)'
 alias drun='docker run -i -t -name '
 alias dport='docker port $(docker ps -l -q)'
@@ -143,7 +148,7 @@ delnone() { docker rmi $(docker images | grep none | awk '{print $3}') ;}
 #alias dps="docker ps"
 #alias dpsa="docker ps -a"
 
-alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | printf \"%-40.40s\"}} {{.Command}}"'
+alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | printf \"%-40.40s\"}} {{.Command}}\t{{.Ports}}"'
 alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}  {{.Status | printf \"%-20.20s\"}}  {{.Image | printf \"%-40.40s\"}}  {{.Command}}" | sort -k 2,2 -k 1,1 -r'
 
 alias dsl='docker start $@ && docker logs $@'

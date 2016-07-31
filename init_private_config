@@ -1,4 +1,4 @@
-git clone  https://github.com/moisei/unix_config.git ~/.config_private
+git clone  ssh://git@gfn-docker-portal:18022/Gefen/dalet-4-svn-mirror.git ~/.config_private
 mkdir ~/.config_original
 mv ~/.profile ~/.bashrc  ~/.gitconfig ~/.config_original
 ln -s ~/.config_private/bash/profile ~/.profile

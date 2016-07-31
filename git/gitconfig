@@ -20,3 +20,5 @@
 [user]
 	email = moisei@gmail.com
 	name = moisei
+[push]
+	default = simple

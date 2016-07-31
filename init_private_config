@@ -1,5 +1,22 @@
-git clone  ssh://git@gfn-docker-portal:18022/Gefen/dalet-4-svn-mirror.git ~/.config_private
+if [ -f ~/.config_private ]; then
+   echo "~/.config_private exists. Exiting"
+   exit 1
+fi
+if [ -f ~/.config_original ]; then
+   echo "~/.config_original exists. Exiting"
+   exit 1
+fi
+git clone git@github.com:moisei/unix_config.git ~/.config_private
+if [ ! -f ~/.config_private ]; then
+   echo "~/.config_private does not exist after clone. Exiting"
+   exit 1
+fi
+
 mkdir ~/.config_original
-mv ~/.profile ~/.bashrc  ~/.gitconfig ~/.config_original
+if [ ! -f ~/.config_original ]; then
+   echo "~/.config_original does not exist after mkdir. Exiting"
+   exit 1
+fi
+mv ~/.profile ~/.bashrc ~/.gitconfig ~/.config_original
 ln -s ~/.config_private/bash/profile ~/.profile
 ln -s ~/.config_private/git/gitconfig  ~/.gitconfig

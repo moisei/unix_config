@@ -1,7 +1,5 @@
 #!/bin/bash
 
-rm -rf ~/.config_private  ~/.config_original
-
 if [ -d ~/.config_private ]; then
    echo "~/.config_private exists. Exiting"
    exit 1

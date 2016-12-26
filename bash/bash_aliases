@@ -38,6 +38,7 @@ alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
+alias ga='git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"\1\t\2"/ | sort'
 
 # docker
 
@@ -172,6 +173,6 @@ alias ag='alias | grep '
 alias psg='ps -aef | grep '
 alias subgit='docker run --rm -v $PWD:$PWD -w $PWD "dalet/subgit:1" subgit'
 
-alias pa='git -C ~/.config push -m '
+alias pa='git -C ~/.config_private push'
 alias gita='git -C ~/.config_private'
 

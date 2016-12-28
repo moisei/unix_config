@@ -42,7 +42,7 @@ alias glogp='git log --pretty=format:"%h %s" --graph'
 # docker
 
 # Docker Machine
-alias docker="sudo docker"
+# alias docker="sudo docker"
 
 alias dmachine='cd ~/Downloads/dmachine'
 alias dm='sudo docker-machine '
@@ -105,7 +105,7 @@ alias dmin='docker-machine inspect $(docker-machine ls | tail -1 | awk "{print $
 delcon() { docker rm -f $(docker ps  -a | grep $@ | awk '{print $1}') ;}
 # Stop all containers matching the passed paramater.
 stopcon() { docker stop $(docker ps  -a | grep $@ | awk '{print $1}') ;}
-alias da='sudo  docker attach --sig-proxy=false '
+alias da='docker attach --sig-proxy=false '
 alias dstop='docker stop '
 alias dstart='docker start '
 alias din='docker inspect '
@@ -151,10 +151,7 @@ delimg() { docker rmi $(docker images | grep $@ | awk '{print $3}') ;}
 delnone() { docker rmi $(docker images | grep none | awk '{print $3}') ;}
 
 
-#alias dps="docker ps"
-#alias dpsa="docker ps -a"
-
-alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | printf \"%-40.40s\"}} {{.Command}}\t{{.Ports}}"'
+alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | printf \"%-20.20s\"}} {{.Command}}\t{{.Ports}}" | sort'
 alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}  {{.Status | printf \"%-20.20s\"}}  {{.Image | printf \"%-40.40s\"}}  {{.Command}}" | sort -k 2,2 -k 1,1 -r'
 
 f_dsl() { docker start $@ && docker logs -f $@ ;}
@@ -172,6 +169,7 @@ alias ag='alias | grep '
 alias psg='ps -aef | grep '
 alias subgit='docker run --rm -v $PWD:$PWD -w $PWD "dalet/subgit:1" subgit'
 
-alias pa='git -C ~/.config push -m '
+alias pa='git -C ~/.config_private commit -am "." && git -C ~/.config_private push'
 alias gita='git -C ~/.config_private'
 
+alias gl="git log --name-status --date-order --date=iso --full-history --all --pretty=format:'%C(yellow)%h %C(cyan)%ad%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(bold blue)%aN%C(reset)%C(bold yellow)%d %C(reset)%s'"

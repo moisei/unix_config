@@ -64,7 +64,7 @@ dockexecl() { docker exec -i -t $(docker ps -l -q) bash ;}
 dockexec() { docker exec -i -t $@ bash ;}
 bash_onetime() { docker run -it --rm $@ /bin/bash ;}
 sh_onetime() { docker run -it --rm $@ /bin/sh ;}
-#dock_run_exec() { docker rm -fv $@; docker run -d --name $@ $@ && sleep 2 && docker exec -it $@ bash ;}
+#dock_run_exec() { docker rm -fv $@; docker run -d --name $@ $@ && sleep 2 && docker exec -it $@ /bin/bash ;}
 #alias drbash='dock_run_exec'
 alias dbash='dockexec'
 alias dbash1='bash_onetime'
@@ -118,7 +118,7 @@ alias dbc='docker build -t --no-cache '
 
 alias dexec='docker exec '
 dexl() { docker exec -i -t $(docker ps -l -q)  bash ;}
-dex() { docker exec -i -t $@ bash ;}
+dex() { docker exec -i -t $@ /bin/bash ;}
 alias dbash='dex'
 #dbash() {docker exec -it $@ bash --init-file <(echo ". \"$HOME/.bashrc\"; export TERM=xterm")}
 alias dlog='docker logs $(docker ps -l -q)'
@@ -156,7 +156,9 @@ alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | pri
 alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}  {{.Status | printf \"%-20.20s\"}}  {{.Image | printf \"%-40.40s\"}}  {{.Command}}" | sort -k 2,2 -k 1,1 -r'
 
 f_dsl() { docker start $@ && docker logs -f $@ ;}
-alias dsl='dsl'
+alias dsl='f_dsl'
+
+alias dc='docker-compose'
 
 alias ll='LC_COLLATE=C ls -alF'
 alias l='LC_COLLATE=C ls -lF'

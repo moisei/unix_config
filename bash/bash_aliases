@@ -38,7 +38,8 @@ alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
-alias ga='git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"\1\t\2"/ | sort'
+alias ga='(git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"git \1\t\2"/ & alias | grep git) | sort'
+alias gag='ga | grep'
 
 # docker
 
@@ -61,12 +62,14 @@ alias mstop='docker-machine stop '
 
 #Get IP addresses
 dockexecl() { docker exec -i -t $(docker ps -l -q) bash ;}
-dockexec() { docker exec -i -t $@ bash ;}
+exec_dbash() { docker exec -i -t $@ bash ;}
+exec_sh() { docker exec -i -t $@ sh ;}
 bash_onetime() { docker run -it --rm $@ /bin/bash ;}
 sh_onetime() { docker run -it --rm $@ /bin/sh ;}
 #dock_run_exec() { docker rm -fv $@; docker run -d --name $@ $@ && sleep 2 && docker exec -it $@ /bin/bash ;}
 #alias drbash='dock_run_exec'
-alias dbash='dockexec'
+alias dbash='exec_dbash'
+alias dsh='exec_sh'
 alias dbash1='bash_onetime'
 alias dsh1='sh_onetime'
 

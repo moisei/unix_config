@@ -163,6 +163,8 @@ alias dsl='f_dsl'
 
 alias dc='docker-compose'
 
+alias ds='docker service'
+
 alias ll='LC_COLLATE=C ls -alF'
 alias l='LC_COLLATE=C ls -lF'
 

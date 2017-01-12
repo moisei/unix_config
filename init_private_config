@@ -9,19 +9,18 @@ if [ -d ~/.config_original ]; then
    exit 1
 fi
 
-mkdir ~/.config_original
-if [ ! -d ~/.config_original ]; then
-   echo "~/.config_original does not exist after mkdir. Exiting"
-   exit 1
-fi
-mv ~/.profile ~/.bashrc ~/.gitconfig ~/.config_original
-
 git clone git@github.com:moisei/unix_config.git ~/.config_private
 if [ ! -d ~/.config_private ]; then
    echo "~/.config_private does not exist after clone. Exiting"
    exit 1
 fi
 
+mkdir ~/.config_original
+if [ ! -d ~/.config_original ]; then
+   echo "~/.config_original does not exist after mkdir. Exiting"
+   exit 1
+fi
+mv ~/.profile ~/.bashrc ~/.gitconfig ~/.config_original
 
 ln -s ~/.config_private/bash/profile ~/.profile
 ln -s ~/.config_private/git/gitconfig  ~/.gitconfig

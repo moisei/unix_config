@@ -59,6 +59,10 @@ alias dmstar='docker-machine start'
 alias dmstop='docker-machine stop'
 alias mstar='docker-machine start'
 alias mstop='docker-machine stop'
+dmeval_f() { eval "$(docker-machine env $@)" ;}
+alias dmeval='dmeval_f'
+alias dm-recert='docker-machine ls -q | xargs docker-machine regenerate-certs -f'
+
 
 #Get IP addresses
 dockexecl() { docker exec -i -t $(docker ps -l -q) bash ;}

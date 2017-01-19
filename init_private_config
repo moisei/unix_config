@@ -20,7 +20,7 @@ if [ ! -d ~/.config_original ]; then
    echo "~/.config_original does not exist after mkdir. Exiting"
    exit 1
 fi
-mv ~/.profile ~/.bash_profile ~/.bashrc ~/.gitconfig ~/.config_original
+mv ~/.profile ~/.bash_profile ~/.bashrc ~/.gitconfig ~/.config_original &> /dev/null
 
 ln -s ~/.config_private/bash/profile ~/.profile
 ln -s ~/.config_private/git/gitconfig  ~/.gitconfig

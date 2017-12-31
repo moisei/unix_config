@@ -187,7 +187,7 @@ alias pa='gita commit -a -m "." && gita push'
 alias ua='gita pull'
 
 alias gl="git log --name-status --date-order --date=iso --full-history --all --pretty=format:'%C(yellow)%h %C(cyan)%ad%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(bold blue)%aN%C(reset)%C(bold yellow)%d %C(reset)%s'"
-alias aws='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aws'
+# alias aws='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aws'
+alias aws='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -v $(pwd):/aws mikesir87/aws-cli aws'
 alias winshare='docker rm -fv samba &> /dev/null; docker run --name samba -d -p 139:139 -p 445:445 -v ${PWD}:/${PWD##*/} dperson/samba -W -s "${PWD##*/};/${PWD##*/};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
-alias s3mount='sudo umount s3fs &> /dev/null; docker rm -fv s3fs &> /dev/null; docker run -d --name s3fs -v ~/.s3fs:/root/.s3fs --security-opt apparmor:unconfined --cap-add mknod --cap-add sys_admin --device=/dev/fuse -v /mnt/s3fs:/mnt/mydata:shared xueshanf/s3fs /usr/bin/s3fs -f -o allow_other -o use_cache=/tmp -o passwd_file=/root/.s3fs -o use_path_request_style  'dalet.sandbox' /mnt/mydata'
-
+alias s3mount='sudo umount s3fs &> /dev/null; docker rm -fv s3fs &> /dev/null; docker run -d --name s3fs -v ~/.s3fs:/root/.s3fs --security-opt apparmor:unconfined --cap-add mknod --cap-add sys_admin --device=/dev/fuse -v /mnt/s3fs:/mnt/mydata:shared xueshanf/s3fs /usr/bin/s3fs -f -o allow_other -o use_cache=/tmp -o passwd_file=/root/.s3fs -o use_path_request_style  'dalet-sandbox' /mnt/mydata'

@@ -20,7 +20,8 @@ alias cd..="cd .."
 
 alias h='history'
 alias hg='history | grep -i'
-alias hl='history | tail -n 1'
+#alias hg5='hg | tail -n 5'
+#alias hg1='hg | tail -n 1'
 
 # git
 alias gst='git status'
@@ -165,7 +166,7 @@ alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}  {{.Status | pr
 f_dsl() { docker start $@ && docker logs -f $@ ;}
 alias dsl='f_dsl'
 
-alias dc='docker-compose'
+alias dc='sudo docker-compose'
 
 alias ds='docker service'
 
@@ -187,3 +188,5 @@ alias ua='gita pull'
 
 alias gl="git log --name-status --date-order --date=iso --full-history --all --pretty=format:'%C(yellow)%h %C(cyan)%ad%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(bold blue)%aN%C(reset)%C(bold yellow)%d %C(reset)%s'"
 alias aws='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aws'
+alias winshare='docker rm -fv samba &> /dev/null; docker run --name samba -d -p 139:139 -p 445:445 -v ${PWD}:/${PWD##*/} dperson/samba -W -s "${PWD##*/};/${PWD##*/};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
+

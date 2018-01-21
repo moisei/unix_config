@@ -160,8 +160,9 @@ delimg() { docker rmi $(docker images | grep $@ | awk '{print $3}') ;}
 delnone() { docker rmi $(docker images | grep none | awk '{print $3}') ;}
 
 
-alias dps='docker  ps    --format "{{.Names | printf \"%-20s\"}}  {{.Image | printf \"%-20.20s\"}} {{.Command}}\t{{.Ports}}" | sort'
-alias dpsa='docker ps -a --format "{{.Names | printf \"%-20s\"}}  {{.Status | printf \"%-20.20s\"}}  {{.Image | printf \"%-40.40s\"}}  {{.Command}}" | sort -k 2,2 -k 1,1 -r'
+a dps="docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.Command}}\t{{.Ports}}' | sed 's/0.0.0.0://g' | sed 's/\/tcp//g' |  sed 's/\/udp//g'"
+# a dpsa="docker ps -a --format 'table {{.Names}}\t{{.Image}}\t{{.Command}}\t{{.Ports}}' | sed 's/0.0.0.0://g' | sed 's/\/tcp//g' |  sed 's/\/udp//g' | sort -k 2,2 -k 1,1 -r"
+a dpsa='docker ps -a --format "table {{.Names}}\t{{.Image}}\t{{.Command}}\t{{.Ports}}" | sed "s/0.0.0.0://g" | sed "s/\/tcp//g" |  sed "s/\/udp//g" | (read -r; printf "%s\n" "$REPLY"; sort -k 2,2 -k 1,1 -r)'
 
 f_dsl() { docker start $@ && docker logs -f $@ ;}
 alias dsl='f_dsl'

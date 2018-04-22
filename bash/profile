@@ -9,6 +9,9 @@
 #umask 022
 
 USER_CFG_DIR=$HOME/.config_private
+JAVA7=/usr/java/jdk1.7.0_80
+PATH=$PATH:$JAVA7/bin
+
 echo "USER_CFG_DIR is: $USER_CFG_DIR"
 
 # if running bash

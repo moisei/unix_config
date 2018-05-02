@@ -18,6 +18,8 @@ alias +="more"
 
 alias cd..="cd .."
 
+alias cls='clear'
+
 alias h='history'
 alias hg='history | grep -i'
 #alias hg5='hg | tail -n 5'

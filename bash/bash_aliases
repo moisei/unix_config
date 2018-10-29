@@ -117,9 +117,10 @@ stopcon() { docker stop $(docker ps  -a | grep $@ | awk '{print $1}') ;}
 alias da='docker attach --sig-proxy=false'
 alias dstop='docker stop'
 alias dstart='docker start'
-alias din='docker inspect'
+alias dins='docker inspect'
 alias dp='docker port $(docker ps -l -q)'
-alias dv='docker volume'
+dvp_f() { docker volume inspect $@ | grep Mountpoint | cut -d '"' -f 4 ; }
+alias dvp='dvp_f'
 alias db='docker build -t'
 alias dbc='docker build -t --no-cache'
 #alias drm='docker ps -l -q | xargs docker stop | xargs docker rm'
@@ -166,7 +167,7 @@ a dpsa='docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Com
 f_dsl() { docker start $@ && docker logs -f $@ ;}
 alias dsl='f_dsl'
 
-alias dc='sudo docker-compose'
+alias dc='docker-compose'
 
 alias ds='docker service'
 

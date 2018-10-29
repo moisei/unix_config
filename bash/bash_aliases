@@ -18,6 +18,8 @@ alias +="more"
 
 alias cd..="cd .."
 
+alias cls='clear'
+
 alias h='history'
 alias hg='history | grep -i'
 #alias hg5='hg | tail -n 5'
@@ -187,6 +189,8 @@ alias gita='git -C $USER_CFG_DIR'
 alias pa='gita commit -a -m "." && gita push'
 alias ua='gita pull'
 
+alias route_to_max='sudo route add -net 172.17.1.0 netmask 255.255.255.0 gw 172.18.1.1'
+
 # git pretty log
 a gl="git log --name-status --date-order --date=iso --full-history --all --pretty=format:'%C(yellow)%h %C(cyan)%ad%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(bold blue)%aN%C(reset)%C(bold yellow)%d %C(reset)%s'"
 # aws creds from file
@@ -194,11 +198,12 @@ a awsf='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aw
 # aws creds from env
 a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -v $(pwd):/aws mikesir87/aws-cli aws'
 # share current folder to cifs
-a winshare='docker rm -fv samba-winshare; DIR=${PWD##*/}; docker run --rm --name samba-winshare -d -p 139:139 -p 445:445 -v ${PWD}:/$DIR dperson/samba -W -s "${DIR};/${DIR};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
+a winshare='docker rm -fv samba-winshare &> /dev/null; DIR=${PWD##*/}; docker run --rm --name samba-winshare -d -p 139:139 -p 445:445 -v ${PWD}:/$DIR dperson/samba -W -s "${DIR};/${DIR};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
 # mount s3 bucket dalet-sandbox to /mnt/mydata
 a s3mount='sudo umount /mnt/s3fs &> /dev/null; docker rm -fv s3fs &> /dev/null; docker run -d --name s3fs -v ~/.s3fs:/root/.s3fs --security-opt apparmor:unconfined --cap-add mknod --cap-add sys_admin --device=/dev/fuse -v /mnt/s3fs:/mnt/mydata:shared xueshanf/s3fs /usr/bin/s3fs -f -o allow_other -o use_cache=/tmp -o passwd_file=/root/.s3fs -o use_path_request_style  'dalet-sandbox' /mnt/mydata'
 # jq from docker container
 a jq='docker run -i --rm mwendler/jq'
+a jq.='jq -C -S "."'
 # docker inspect pretty print
 dinsp() (for c in `docker ps -a --format {{.Names}} | grep "$@"`; do echo $c; docker inspect --format="{{json .Config}}" $c | jq -C -S "."; done)
 

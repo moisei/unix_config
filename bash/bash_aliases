@@ -168,7 +168,7 @@ a dpsa='docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Image}}\t{{.Com
 f_dsl() { docker start $@ && docker logs -f $@ ;}
 alias dsl='f_dsl'
 
-alias dc='sudo docker-compose'
+alias dc='docker-compose'
 
 alias ds='docker service'
 
@@ -194,8 +194,11 @@ alias route_to_max='sudo route add -net 172.17.1.0 netmask 255.255.255.0 gw 172.
 a gl="git log --name-status --date-order --date=iso --full-history --all --pretty=format:'%C(yellow)%h %C(cyan)%ad%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(bold blue)%aN%C(reset)%C(bold yellow)%d %C(reset)%s'"
 # aws creds from file
 a awsf='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aws'
+# aws shell
+a awss='docker run --rm -it -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
 # aws creds from env
 a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -v $(pwd):/aws mikesir87/aws-cli aws'
+
 # share current folder to cifs
 a winshare='docker rm -fv samba-winshare &> /dev/null; DIR=${PWD##*/}; docker run --rm --name samba-winshare -d -p 139:139 -p 445:445 -v ${PWD}:/$DIR dperson/samba -W -s "${DIR};/${DIR};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
 # mount s3 bucket dalet-sandbox to /mnt/mydata

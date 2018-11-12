@@ -214,3 +214,5 @@ dex() { docker exec -i -t $@ /bin/bash ;}
 
 title_f() { echo -e '\033]2;'$1'\007' ;}
 alias title=title_f
+
+lssh() { pushd ~/.ssh; eval "$*"; popd }

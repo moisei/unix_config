@@ -210,3 +210,7 @@ a jq.='jq -C -S "."'
 # docker inspect pretty print
 dinsp() (for c in `docker ps -a --format {{.Names}} | grep "$@"`; do echo $c; docker inspect --format="{{json .Config}}" $c | jq -C -S "."; done)
 
+dex() { docker exec -i -t $@ /bin/bash ;}
+
+title_f() { echo -e '\033]2;'$1'\007' ;}
+alias title=title_f

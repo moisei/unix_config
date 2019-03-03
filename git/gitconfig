@@ -18,7 +18,7 @@
     unstage = reset HEAD --
     last = log -1 HEAD
 [user]
-	email = moisei@gmail.com
+	email = moisei@nowhere.com
 	name = moisei
 [push]
 	default = simple

@@ -44,6 +44,8 @@ alias glogp='git log --pretty=format:"%h %s" --graph'
 alias ga='(git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"git \1\t\2"/ & alias | grep git) | sort'
 alias gag='ga | grep'
 
+ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
+
 # docker
 
 # Docker Machine
@@ -175,6 +177,8 @@ alias ds='docker service'
 
 alias ll='LC_COLLATE=C ls -alF'
 alias l='LC_COLLATE=C ls -lF'
+alias lld='ll --group-directories-first'
+alias ld='l --group-directories-first'
 
 alias du='du -h'
 alias du.='du -sh .'
@@ -198,7 +202,7 @@ a awsf='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aw
 # aws shell
 a awss='docker run --rm -it -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
 # aws creds from env
-a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -v $(pwd):/aws mikesir87/aws-cli aws'
+a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} -v $(pwd):/aws mikesir87/aws-cli aws'
 
 # share current folder to cifs
 a winshare='docker rm -fv samba-winshare &> /dev/null; DIR=${PWD##*/}; docker run --rm --name samba-winshare -d -p 139:139 -p 445:445 -v ${PWD}:/$DIR dperson/samba -W -s "${DIR};/${DIR};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
@@ -212,7 +216,7 @@ dinsp() (for c in `docker ps -a --format {{.Names}} | grep "$@"`; do echo $c; do
 
 dex() { docker exec -i -t $@ /bin/bash ;}
 
-title_f() { echo -e '\033]2;'$1'\007' ;}
-alias title=title_f
+title() { export PS_SAVE=$PS1; PS_SAVE='`pwd` # '; echo -e '\033]2;'$1'\007' ;}
 
-lssh() { pushd ~/.ssh; eval "$*"; popd ;}
+# ssh from .ssh dir
+lssh() { pushd ~/.ssh; eval "ssh $*"; popd ;}

@@ -202,7 +202,7 @@ a awsf='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aw
 # aws shell
 a awss='docker run --rm -it -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
 # aws creds from env
-a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} -v $(pwd):/aws mikesir87/aws-cli aws'
+a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} -v $(pwd):/aws mikesir87/aws-cli aws'
 
 # share current folder to cifs
 a winshare='docker rm -fv samba-winshare &> /dev/null; DIR=${PWD##*/}; docker run --rm --name samba-winshare -d -p 139:139 -p 445:445 -v ${PWD}:/$DIR dperson/samba -W -s "${DIR};/${DIR};yes;no;yes;all;${USER};${USER};Share@${PWD}"'

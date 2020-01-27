@@ -9,7 +9,8 @@ if [ -d ~/.config_original ]; then
    exit 1
 fi
 
-git clone git@github.com:moisei/unix_config.git ~/.config_private
+# git clone git@github.com:moisei/unix_config.git ~/.config_private
+git clone https://github.com/moisei/unix_config.git ~/.config_private
 if [ ! -d ~/.config_private ]; then
    echo "~/.config_private does not exist after clone. Exiting"
    exit 1

@@ -1,3 +1,6 @@
+Set of useful unix bash aliases and functions.
+
+One liner to load:
 ```
 curl https://raw.githubusercontent.com/moisei/unix_config/master/init_private_config | bash
 ```

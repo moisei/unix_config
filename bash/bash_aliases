@@ -220,3 +220,10 @@ title() { export PS_SAVE=$PS1; PS_SAVE='`pwd` # '; echo -e '\033]2;'$1'\007' ;}
 
 # ssh from .ssh dir
 lssh() { pushd ~/.ssh; eval "ssh $*"; popd ;}
+
+
+a node='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" "node:lts"'
+a yarn='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" --entrypoint yarn "node:lts"'
+a wa='watch -n 1'
+
+a bfg='docker run -it --rm -v "$PWD":/data --workdir /data soodesune/bfg-repo-cleaner'

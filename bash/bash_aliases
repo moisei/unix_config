@@ -172,6 +172,11 @@ f_dsl() { docker start $@ && docker logs -f $@ ;}
 alias dsl='f_dsl'
 
 alias dc='docker-compose'
+alias dcup='dc up -d'
+alias dcdown='dc down'
+alias dcdownf='dc down -v --remove-orphans'
+alias dcreup='dcdown; dcup'
+alias dcreupf='dcdownf; dcup'
 
 alias ds='docker service'
 
@@ -220,3 +225,12 @@ title() { export PS_SAVE=$PS1; PS_SAVE='`pwd` # '; echo -e '\033]2;'$1'\007' ;}
 
 # ssh from .ssh dir
 lssh() { pushd ~/.ssh; eval "ssh $*"; popd ;}
+
+
+yq() {
+  docker run --rm -i -v ${PWD}:/workdir mikefarah/yq yq $@
+}
+
+
+# sort preserving header row! https://stackoverflow.com/questions/14562423/is-there-a-way-to-ignore-header-lines-in-a-unix-sort
+a sorth='(sed -u 1q; sort)'

@@ -177,6 +177,7 @@ alias dcdown='dc down'
 alias dcdownf='dc down -v --remove-orphans'
 alias dcreup='dcdown; dcup'
 alias dcreupf='dcdownf; dcup'
+alias dclf='dc logs -f'
 
 alias ds='docker service'
 
@@ -237,3 +238,7 @@ yq() {
 }
 # sort preserving header row! https://stackoverflow.com/questions/14562423/is-there-a-way-to-ignore-header-lines-in-a-unix-sort
 a sorth='(sed -u 1q; sort)'
+a groovy='docker run --rm -v ${PWD}:/home/groovy/scripts -w /home/groovy/scripts groovy groovy'
+a groovysh='docker run --rm -it -u ${UID} -v ${PWD}:/home/groovy/scripts -w /home/groovy/scripts groovy bash'
+a gradle='docker run --rm -v ${PWD}:/home/work -w /home/work groovy groovy'
+a gradlesh='docker run --rm -it -u ${UID} -v ${PWD}:/home/work -w /home/work gradle bash'

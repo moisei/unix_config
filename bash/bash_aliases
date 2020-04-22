@@ -176,6 +176,7 @@ alias dcup='dc up -d'
 alias dcdown='dc down'
 alias dcdownf='dc down -v --remove-orphans'
 alias dcreup='dcdown; dcup'
+alias dcreupb='dcdown; dcup --build'
 alias dcreupf='dcdownf; dcup'
 
 alias ds='docker service'

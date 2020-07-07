@@ -247,16 +247,22 @@ a groovysh='docker run --rm -it -u ${UID} -v ${PWD}:/home/groovy/scripts -w /hom
 # alias gradle='docker run --rm -it -e GRADLE_USER_HOME=/.gradle -v ~/.gradle:/.gradle -v ${PWD}:/work -w /work -u $UID:$UID --entrypoint gradle gradle:jdk11 --no-daemon --parallel'
 # alias gradlesh='docker run --rm -it -e GRADLE_USER_HOME=/.gradle -v ~/.gradle:/.gradle -v ${PWD}:/work -w /work -u $UID:$UID --entrypoint bash gradle:jdk11'
 
+
+# run the container so current folder mapped to the same path
+# user and group are set to the current user
+# timezone is set to the host timezone
+# user and gradle homes re set to the .user_gradle dir which is created if needed
 function gradlesh () {
-  TMP_USER_HOME="${PWD}/.user_gradle"
-  mkdir -p $TMP_USER_HOME
-  docker run --rm -it                           \
-        -v $PWD:$PWD -w $PWD                    \
-        -v /etc/passwd:/etc/passwd:ro -u $UID   \
+   TMP_USER_HOME="${PWD}/.user_gradle"          \
+   docker run --rm -it                          \
         -v /etc/localtime:/etc/localtime:ro     \
+        -v $PWD:$PWD -w $PWD                    \
+        -v /etc/passwd:/etc/passwd:ro           \
+        -v /etc/group:/etc/group:ro             \
+        -u `id -u`:`id -g`                      \
         -e GRADLE_USER_HOME=$TMP_USER_HOME      \
         -e USER_HOME=$TMP_USER_HOME             \
     gradle:6.2.2-jdk11                          \
-        $*
+        bash -c "mkdir -p $TMP_USER_HOME; $*"
 }
 typeset -xf gradlesh

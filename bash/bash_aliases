@@ -227,6 +227,7 @@ title() { export PS_SAVE=$PS1; PS_SAVE='`pwd` # '; echo -e '\033]2;'$1'\007' ;}
 # ssh from .ssh dir
 sshl() { pushd ~/.ssh; eval "ssh $*"; popd ;}
 
+a nodesh='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" --entrypoint "" "node:lts" bash'
 a node='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" "node:lts"'
 a yarn='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" --entrypoint yarn "node:lts"'
 a wa='watch -n 1'
@@ -240,5 +241,22 @@ yq() {
 a sorth='(sed -u 1q; sort)'
 a groovy='docker run --rm -v ${PWD}:/home/groovy/scripts -w /home/groovy/scripts groovy groovy'
 a groovysh='docker run --rm -it -u ${UID} -v ${PWD}:/home/groovy/scripts -w /home/groovy/scripts groovy bash'
-a gradle='docker run --rm -v ${PWD}:/home/work -w /home/work groovy groovy'
-a gradlesh='docker run --rm -it -u ${UID} -v ${PWD}:/home/work -w /home/work gradle bash'
+# a gradle='docker run --rm -v ${PWD}:/home/work -w /home/work groovy gradle'
+# a gradlesh='docker run --rm -it -u ${UID} -v ${PWD}:/home/work -w /home/work gradle bash'
+
+# alias gradle='docker run --rm -it -e GRADLE_USER_HOME=/.gradle -v ~/.gradle:/.gradle -v ${PWD}:/work -w /work -u $UID:$UID --entrypoint gradle gradle:jdk11 --no-daemon --parallel'
+# alias gradlesh='docker run --rm -it -e GRADLE_USER_HOME=/.gradle -v ~/.gradle:/.gradle -v ${PWD}:/work -w /work -u $UID:$UID --entrypoint bash gradle:jdk11'
+
+function gradlesh () {
+  TMP_USER_HOME="${PWD}/.user_gradle"
+  mkdir -p $TMP_USER_HOME
+  docker run --rm -it                           \
+        -v $PWD:$PWD -w $PWD                    \
+        -v /etc/passwd:/etc/passwd:ro -u $UID   \
+        -v /etc/localtime:/etc/localtime:ro     \
+        -e GRADLE_USER_HOME=$TMP_USER_HOME      \
+        -e USER_HOME=$TMP_USER_HOME             \
+    gradle:6.2.2-jdk11                          \
+        $*
+}
+typeset -xf gradlesh

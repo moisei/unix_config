@@ -43,8 +43,9 @@ alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
 alias ga='(git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"git \1\t\2"/ & alias | grep git) | sort'
 alias gag='ga | grep'
-
 ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
+alias gorig='git remote show origin'
+
 
 # docker
 
@@ -266,3 +267,9 @@ function gradlesh () {
         bash -c "mkdir -p $TMP_USER_HOME; $*"
 }
 typeset -xf gradlesh
+
+a tfa='tf apply   -auto-approve'
+a tfd='tf destroy -auto-approve'
+a tf='terraform'
+
+alias mvnsh='docker run --rm -it --user `id -u`:`id -g` -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group  -v $HOME/.m2:$HOME/.m2 -v $PWD:/$PWD -w $PWD --entrypoint bash maven:3-adoptopenjdk-11'

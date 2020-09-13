@@ -22,3 +22,5 @@
 	name = moisei
 [push]
 	default = simple
+[core]
+	excludesfile = /home/moisei/.gitignore_global

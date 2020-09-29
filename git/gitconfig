@@ -24,3 +24,5 @@
 	default = simple
 [core]
 	excludesfile = /home/moisei/.gitignore_global
+[gpg]
+	program = gpg1

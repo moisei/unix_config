@@ -9,14 +9,11 @@
 #umask 022
 
 USER_CFG_DIR=$HOME/.config_private
-JAVA7=/usr/java/jdk1.7.0_80
-PATH=$PATH:$JAVA7/bin
 
 echo "USER_CFG_DIR is: $USER_CFG_DIR"
 
-# if running bash
+# if running bash include .bashrc if it exists
 if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
     if [ -f "$USER_CFG_DIR/bash/bashrc" ]; then
 	. "$USER_CFG_DIR/bash/bashrc"
     fi

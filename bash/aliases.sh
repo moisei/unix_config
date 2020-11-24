@@ -2,8 +2,9 @@ USER_CFG_DIR=$HOME/.config_private
 
 # bash
 alias a="alias"
-alias ra="source $USER_CFG_DIR/bash/bash_aliases"
-alias ea="nano $USER_CFG_DIR/bash/bash_aliases"
+alias ra="source $USER_CFG_DIR/bash/aliases.sh"
+alias ef="nano $USER_CFG_DIR/bash/functions.sh"
+alias ea="nano $USER_CFG_DIR/bash/aliases.sh"
 
 alias del="rm"
 alias ren="mv"

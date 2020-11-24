@@ -58,11 +58,9 @@ function winshare () {
     docker run --name $CONTAINER_NAME -d    \
             -p 139:139 -p 445:445           \
             -v ${LOCAL_DIR}:${REMOTE_DIR}   \
-            -e USERID=1000                  \
-            -e GROUPID=1004                 \
         dperson/samba                       \
             -u "${USER};${PASSWORD}"        \
-            -s "${DIR};${REMOTE_DIR};yes;no;yes;all;${USER};${USER};${SHARE_NAME}" \
+            -s "${DIR};${REMOTE_DIR}" \
             -p
     echo "net use \\\\`hostname -i`\\$DIR /USER:$USER $USER"
 }

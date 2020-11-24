@@ -20,8 +20,9 @@ function dockersh () {
 
 
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' 'bash' ; }; typeset -xf gradlesh
-function mvnsh () { dockersh 'maven:3-adoptopenjdk-11' 'bash' ; }; typeset -xf mvnsh
+function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' 'bash' ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
+function cppsh ()    { dockersh 'grpc-dev' 'bash' ; }; typeset -xf cppsh
 
 # https://github.com/mikefarah/yq
 # a lightweight and portable command-line YAML processor

@@ -255,3 +255,8 @@ a tf='terraform'
 # alias mvnsh='docker run --rm -it --user `id -u`:`id -g` -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group  -v $HOME/.m2:$HOME/.m2 -v $PWD:/$PWD -w $PWD --entrypoint bash maven:3-adoptopenjdk-11'
 
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
+
+if [ $IS_WSL ]; then
+    a c='"/mnt/c/Users/moise/AppData/Local/Programs/Microsoft VS Code/Code.exe"'
+    a cc='c .'
+fi

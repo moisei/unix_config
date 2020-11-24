@@ -4,6 +4,7 @@
 # current path becomes the current path iside of the container
 function dockersh () {
     image=$1
+    shell=$2
     docker run --rm -it                         \
             -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
@@ -12,15 +13,15 @@ function dockersh () {
             -u `id -u`:`id -g`                      \
             -v $HOME:$HOME                          \
             -w $PWD                                 \
-            --entrypoint bash                       \
+            --entrypoint $shell                     \
         $1
 }
 
 
 
-function gradlesh () { dockersh 'gradle:6.2.2-jdk11' ; }; typeset -xf gradlesh
-function mvnsh () { dockersh 'maven:3-adoptopenjdk-11' ; }; typeset -xf mvnsh
-function pythonsh () { dockersh 'python:alpine' ; }; typeset -xf pythonsh
+function gradlesh () { dockersh 'gradle:6.2.2-jdk11' 'bash' ; }; typeset -xf gradlesh
+function mvnsh () { dockersh 'maven:3-adoptopenjdk-11' 'bash' ; }; typeset -xf mvnsh
+function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
 
 # https://github.com/mikefarah/yq
 # a lightweight and portable command-line YAML processor

@@ -10,7 +10,6 @@ esac
 
 if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null ; then
     export IS_WSL=true
-else
 fi
 
 # don't put duplicate lines or lines starting with space in the history.

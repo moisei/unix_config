@@ -5,12 +5,13 @@
 function dockersh () {
     image=$1
     shell=$2
-    docker run --rm -it                         \
+    docker run --rm -it                             \
             -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
             -v /etc/group:/etc/group:ro             \
             -u `id -u`:`id -g`                      \
+            -e HOME
             -v $HOME:$HOME                          \
             -w $PWD                                 \
             --entrypoint $shell                     \

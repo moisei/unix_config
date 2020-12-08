@@ -231,9 +231,9 @@ title() { export PS_SAVE=$PS1; PS_SAVE='`pwd` # '; echo -e '\033]2;'$1'\007' ;}
 # ssh from .ssh dir
 sshl() { pushd ~/.ssh; eval "ssh $*"; popd ;}
 
-a nodesh='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" --entrypoint "" "node:lts" bash'
-a node='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" "node:lts"'
-a yarn='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" --entrypoint yarn "node:lts"'
+# a nodesh='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" --entrypoint "" "node:lts" bash'
+# a node='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" "node:lts"'
+# a yarn='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" --entrypoint yarn "node:lts"'
 a wa='watch -n 1'
 
 a bfg='docker run -it --rm -v "$PWD":/data --workdir /data soodesune/bfg-repo-cleaner'
@@ -255,9 +255,11 @@ a tf='terraform'
 
 # alias mvnsh='docker run --rm -it --user `id -u`:`id -g` -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group  -v $HOME/.m2:$HOME/.m2 -v $PWD:/$PWD -w $PWD --entrypoint bash maven:3-adoptopenjdk-11'
 
-source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
-
 if [ $IS_WSL ]; then
-    a c='"/mnt/c/Users/moise/AppData/Local/Programs/Microsoft VS Code/Code.exe"'
-    a cc='c .'
+    a c='"/mnt/c/Users/moise/AppData/Local/Programs/Microsoft VS Code/Code.exe" &> /dev/null'
+    a cc='c .&'
 fi
+
+alias psg='ps aux | grep -v " grep " | grep -i'
+
+source "`dirname ${BASH_SOURCE[0]}`/functions.sh"

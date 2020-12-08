@@ -18,7 +18,8 @@ function dockersh () {
 }
 
 
-
+function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' ; }; typeset -xf gradlesh
+function nodejssh () { dockersh 'node' 'bash' ; }; typeset -xf gradlesh
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' 'bash' ; }; typeset -xf gradlesh
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' 'bash' ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh

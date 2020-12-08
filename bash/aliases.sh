@@ -2,8 +2,9 @@ USER_CFG_DIR=$HOME/.config_private
 
 # bash
 alias a="alias"
-alias ra="source $USER_CFG_DIR/bash/bash_aliases"
-alias ea="nano $USER_CFG_DIR/bash/bash_aliases"
+alias ra="source $USER_CFG_DIR/bash/aliases.sh"
+alias ef="nano $USER_CFG_DIR/bash/functions.sh"
+alias ea="nano $USER_CFG_DIR/bash/aliases.sh"
 
 alias del="rm"
 alias ren="mv"
@@ -41,10 +42,13 @@ alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
+alias grso='git remote show origin'
+
 alias ga='(git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"git \1\t\2"/ & alias | grep git) | sort'
 alias gag='ga | grep'
-
 ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
+alias gorig='git remote show origin'
+
 
 # docker
 
@@ -187,8 +191,10 @@ alias l='LC_COLLATE=C ls -lF'
 alias lld='ll --group-directories-first'
 alias ld='l --group-directories-first'
 
-alias du='du -h'
-alias du.='du -sh .'
+# alias du='du -h'
+# alias du.='du -sh .'
+
+
 alias df='df -h'
 alias df.='df -h .'
 alias deld='rm -rf'
@@ -211,8 +217,6 @@ a awss='docker run --rm -it -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cl
 # aws creds from env
 a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} -v $(pwd):/aws mikesir87/aws-cli aws'
 
-# share current folder to cifs
-a winshare='docker rm -fv samba-winshare &> /dev/null; DIR=${PWD##*/}; docker run --rm --name samba-winshare -d -p 139:139 -p 445:445 -v ${PWD}:/$DIR dperson/samba -W -s "${DIR};/${DIR};yes;no;yes;all;${USER};${USER};Share@${PWD}"'
 # mount s3 bucket dalet-sandbox to /mnt/mydata
 a s3mount='sudo umount /mnt/s3fs &> /dev/null; docker rm -fv s3fs &> /dev/null; docker run -d --name s3fs -v ~/.s3fs:/root/.s3fs --security-opt apparmor:unconfined --cap-add mknod --cap-add sys_admin --device=/dev/fuse -v /mnt/s3fs:/mnt/mydata:shared xueshanf/s3fs /usr/bin/s3fs -f -o allow_other -o use_cache=/tmp -o passwd_file=/root/.s3fs -o use_path_request_style  'dalet-sandbox' /mnt/mydata'
 # jq from docker container
@@ -228,18 +232,33 @@ title() { export PS_SAVE=$PS1; PS_SAVE='`pwd` # '; echo -e '\033]2;'$1'\007' ;}
 # ssh from .ssh dir
 sshl() { pushd ~/.ssh; eval "ssh $*"; popd ;}
 
+a nodesh='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" --entrypoint "" "node:lts" bash'
 a node='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" -u "$UID" "node:lts"'
 a yarn='docker run --rm -it -v "$PWD":"/usr/src/root$PWD" -w "/usr/src/root$PWD" --entrypoint yarn "node:lts"'
 a wa='watch -n 1'
 
 a bfg='docker run -it --rm -v "$PWD":/data --workdir /data soodesune/bfg-repo-cleaner'
 
-yq() {
-  docker run --rm -i -v ${PWD}:/workdir mikefarah/yq yq $@
-}
 # sort preserving header row! https://stackoverflow.com/questions/14562423/is-there-a-way-to-ignore-header-lines-in-a-unix-sort
 a sorth='(sed -u 1q; sort)'
 a groovy='docker run --rm -v ${PWD}:/home/groovy/scripts -w /home/groovy/scripts groovy groovy'
 a groovysh='docker run --rm -it -u ${UID} -v ${PWD}:/home/groovy/scripts -w /home/groovy/scripts groovy bash'
-a gradle='docker run --rm -v ${PWD}:/home/work -w /home/work groovy groovy'
-a gradlesh='docker run --rm -it -u ${UID} -v ${PWD}:/home/work -w /home/work gradle bash'
+# a gradle='docker run --rm -v ${PWD}:/home/work -w /home/work groovy gradle'
+# a gradlesh='docker run --rm -it -u ${UID} -v ${PWD}:/home/work -w /home/work gradle bash'
+
+# alias gradle='docker run --rm -it -e GRADLE_USER_HOME=/.gradle -v ~/.gradle:/.gradle -v ${PWD}:/work -w /work -u $UID:$UID --entrypoint gradle gradle:jdk11 --no-daemon --parallel'
+# alias gradlesh='docker run --rm -it -e GRADLE_USER_HOME=/.gradle -v ~/.gradle:/.gradle -v ${PWD}:/work -w /work -u $UID:$UID --entrypoint bash gradle:jdk11'
+
+
+a tfa='tf apply   -auto-approve'
+a tfd='tf destroy -auto-approve'
+a tf='terraform'
+
+# alias mvnsh='docker run --rm -it --user `id -u`:`id -g` -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group  -v $HOME/.m2:$HOME/.m2 -v $PWD:/$PWD -w $PWD --entrypoint bash maven:3-adoptopenjdk-11'
+
+source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
+
+if [ $IS_WSL ]; then
+    a c='"/mnt/c/Users/moise/AppData/Local/Programs/Microsoft VS Code/Code.exe"'
+    a cc='c .'
+fi

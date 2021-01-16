@@ -5,7 +5,9 @@
 function dockersh () {
     image=$1
     shell=$2
+    container_port=${3:-80}
     docker run --rm -it                         \
+            -e GOPATH                               \
             -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
@@ -13,16 +15,18 @@ function dockersh () {
             -u `id -u`:`id -g`                      \
             -v $HOME:$HOME                          \
             -w $PWD                                 \
+            -p $container_port:$container_port      \
             --entrypoint $shell                     \
-        $1
+        $image
 }
+typeset -xf dockersh
 
-
-function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' ; }; typeset -xf gradlesh
+function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf gradlesh
 function nodejssh () { dockersh 'node' 'bash' ; }; typeset -xf gradlesh
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' 'bash' ; }; typeset -xf gradlesh
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' 'bash' ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
+function gosh ()     { dockersh 'golang' 'bash' ; }; typeset -xf gosh
 function cppsh ()    { dockersh 'grpc-dev' 'bash' ; }; typeset -xf cppsh
 
 # https://github.com/mikefarah/yq

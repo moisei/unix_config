@@ -17,13 +17,11 @@
     br = branch
     unstage = reset HEAD --
     last = log -1 HEAD
-[user]
-	email = moisei@nowhere.com
-	name = moisei
 [push]
 	default = simple
 [core]
 	excludesfile = /home/moisei/.gitignore_global
 	autocrlf = input
+	whitespace = cr-at-eol
 [gpg]
 	program = gpg1

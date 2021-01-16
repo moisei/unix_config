@@ -3,9 +3,14 @@
 # user home is maounted over container's user home
 # current path becomes the current path iside of the container
 function dockersh () {
-    image=$1
-    shell=$2
-    container_port=${3:-80}
+    local image=$1
+    local entrypoint=$2
+    local container_port=$3
+    local arg_publish_port
+
+    if [ ! -z ${3+x} ]; then
+        local arg_publish_port="-p $3:$3"
+    fi
     docker run --rm -it                         \
             -e GOPATH                               \
             -e HOME                                 \
@@ -16,11 +21,11 @@ function dockersh () {
             -u `id -u`:`id -g`                      \
             -v $HOME:$HOME                          \
             -w $PWD                                 \
-            -p $container_port:$container_port      \
-            --entrypoint $shell                     \
+            $arg_publish_port                       \
+            --entrypoint $entrypoint                \
         $image
 }
-typeset -xf dockersh
+# typeset -xf dockersh
 
 function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf gradlesh
 function nodejssh () { dockersh 'node' 'bash' ; }; typeset -xf gradlesh

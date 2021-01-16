@@ -2,9 +2,10 @@
 # timezone is set to the host timezone
 # user home is maounted over container's user home
 # current path becomes the current path iside of the container
+# Assuming $PWD is under $HOME
 function dockersh () {
     local image=$1
-    local entrypoint=$2
+    local entrypoint=${2:-bash}
     local container_port=$3
     local arg_publish_port
 
@@ -12,8 +13,9 @@ function dockersh () {
         local arg_publish_port="-p $3:$3"
     fi
     docker run --rm -it                         \
-            -e GOPATH                               \
             -e HOME                                 \
+            -e USER                                 \
+            -e GOPATH                               \
             -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
@@ -25,15 +27,16 @@ function dockersh () {
             --entrypoint $entrypoint                \
         $image
 }
-# typeset -xf dockersh
+typeset -xf dockersh
 
 function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf gradlesh
-function nodejssh () { dockersh 'node' 'bash' ; }; typeset -xf gradlesh
-function gradlesh () { dockersh 'gradle:6.2.2-jdk11' 'bash' ; }; typeset -xf gradlesh
-function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' 'bash' ; }; typeset -xf mvnsh
+function nodejssh () { dockersh 'node' $*; }; typeset -xf gradlesh
+function gradlesh () { dockersh 'gradle:6.2.2-jdk11' $* ; }; typeset -xf gradlesh
+function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
-function gosh ()     { dockersh 'golang' 'bash' ; }; typeset -xf gosh
-function cppsh ()    { dockersh 'grpc-dev' 'bash' ; }; typeset -xf cppsh
+function gosh ()     { dockersh 'golang' $*; }; typeset -xf gosh
+function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
+
 
 # https://github.com/mikefarah/yq
 # a lightweight and portable command-line YAML processor

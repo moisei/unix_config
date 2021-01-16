@@ -8,6 +8,7 @@ function dockersh () {
     container_port=${3:-80}
     docker run --rm -it                         \
             -e GOPATH                               \
+            -e HOME                                 \
             -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \

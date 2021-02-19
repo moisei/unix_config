@@ -16,6 +16,7 @@ function dockersh () {
             -e HOME                                 \
             -e USER                                 \
             -e GOPATH                               \
+            -v /usr/local/bin/terraform:/usr/local/bin/terraform:ro     \
             -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
@@ -34,7 +35,7 @@ function nodejssh () { dockersh 'node' $*; }; typeset -xf gradlesh
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' $* ; }; typeset -xf gradlesh
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
-function gosh ()     { dockersh 'golang' $*; }; typeset -xf gosh
+function gosh ()     { dockersh 'golang' $* ; }; typeset -xf gosh
 function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 
 
@@ -81,3 +82,10 @@ function winshare () {
     echo "net use \\\\`hostname -i`\\$DIR /USER:$USER $USER"
 }
 typeset -xf winshare
+
+function todel () {
+    local dir="$HOME/.todel/`date +%Y-%m-%d`"
+    mkdir -p "$dir"
+    mv $* "$dir"
+}
+typeset -xf todel

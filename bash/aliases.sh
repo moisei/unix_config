@@ -49,6 +49,8 @@ alias gag='ga | grep'
 ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
 alias gorig='git remote show origin'
 
+alias grepo='git init; git config user.email "moisei@nowhere.com"; git config user.name "Moisei"'
+alias grepobb='git init; git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
 
 # docker
 
@@ -213,7 +215,7 @@ a gl="git log --name-status --date-order --date=iso --full-history --all --prett
 # aws creds from file
 a awsf='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aws'
 # aws shell
-a awss='docker run --rm -it -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
+a awss='docker run --rm -it -e AD_EMAIL -e AD_PASSWORD -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
 # aws creds from env
 a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} -v $(pwd):/aws mikesir87/aws-cli aws'
 
@@ -250,6 +252,9 @@ if [ $IS_WSL ]; then
     a cc='c .&'
 fi
 
-alias psg='ps aux | grep -v " grep " | grep -i'
+a psg='ps aux | grep -v " grep " | grep -i'
+a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
+a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'
+a gw='./gradlew'
 
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"

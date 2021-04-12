@@ -222,7 +222,7 @@ a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1} -
 # mount s3 bucket dalet-sandbox to /mnt/mydata
 a s3mount='sudo umount /mnt/s3fs &> /dev/null; docker rm -fv s3fs &> /dev/null; docker run -d --name s3fs -v ~/.s3fs:/root/.s3fs --security-opt apparmor:unconfined --cap-add mknod --cap-add sys_admin --device=/dev/fuse -v /mnt/s3fs:/mnt/mydata:shared xueshanf/s3fs /usr/bin/s3fs -f -o allow_other -o use_cache=/tmp -o passwd_file=/root/.s3fs -o use_path_request_style  'dalet-sandbox' /mnt/mydata'
 # jq from docker container
-a jq='docker run -i --rm mwendler/jq'
+a jqd='docker run -i --rm mwendler/jq'
 a jq.='jq -C -S "."'
 # docker inspect pretty print
 dinsp() (for c in `docker ps -a --format {{.Names}} | grep "$@"`; do echo $c; docker inspect --format="{{json .Config}}" $c | jq -C -S "."; done)
@@ -256,5 +256,6 @@ a psg='ps aux | grep -v " grep " | grep -i'
 a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
 a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'
 a gw='./gradlew'
+a s='source'
 
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"

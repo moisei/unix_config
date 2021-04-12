@@ -30,8 +30,10 @@ function dockersh () {
 }
 typeset -xf dockersh
 
-function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf gradlesh
-function nodejssh () { dockersh 'node' $*; }; typeset -xf gradlesh
+function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf ngsh
+function nodejssh () { dockersh 'node' $*; }; typeset -xf nodejssh
+function tscsh ()    { dockersh 'webnews/tools/tsc:latest' $*; }; typeset -xf tscsh
+function tscsh14 ()    { dockersh 'webnews/tools/tsc:14.16' $*; }; typeset -xf tscsh14
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' $* ; }; typeset -xf gradlesh
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh

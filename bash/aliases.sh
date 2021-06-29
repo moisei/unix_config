@@ -193,8 +193,8 @@ alias l='LC_COLLATE=C ls -lF'
 alias lld='ll --group-directories-first'
 alias ld='l --group-directories-first'
 
-# alias du='du -h'
-# alias du.='du -sh .'
+alias duh='du -h * | sort -n'
+alias duhs='du -sh * | sort -n'
 
 
 alias df='df -h'
@@ -248,14 +248,15 @@ a tf='terraform'
 
 # WSL
 if [ $IS_WSL ]; then
-    a c='"/mnt/c/Users/moise/AppData/Local/Programs/Microsoft VS Code/Code.exe" &> /dev/null'
+    a c='"/mnt/c/Program Files/Microsoft VS Code/Code.exe" &> /dev/null'
     a cc='c .&'
 fi
 
 a psg='ps aux | grep -v " grep " | grep -i'
 a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
+a ghuser='git config user.email "moisei@nowhere.com"; git config user.name "Moisei"'
 a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'
 a gw='./gradlew'
 a s='source'
-
+a exp='explorer.exe .'
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"

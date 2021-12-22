@@ -2,6 +2,7 @@ USER_CFG_DIR=$HOME/.config_private
 
 # bash
 alias a="alias"
+# a docker='podman'
 alias ra="source $USER_CFG_DIR/bash/aliases.sh"
 alias ef="nano $USER_CFG_DIR/bash/functions.sh"
 alias ea="nano $USER_CFG_DIR/bash/aliases.sh"
@@ -250,9 +251,12 @@ a tf='terraform'
 if [ $IS_WSL ]; then
     a c='"/mnt/c/Program Files/Microsoft VS Code/Code.exe" &> /dev/null'
     a cc='c .&'
+    a code='nohup bash "/mnt/c/Program Files/Microsoft VS Code/bin/code" . &> "/tmp/nohup-code-`basename $PWD`-`date +%Y-%m-%d-%H-%M-%S`.out" &'
+
 fi
 
 a psg='ps aux | grep -v " grep " | grep -i'
+# a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"; git config core.autocrlf true'
 a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
 a ghuser='git config user.email "moisei@nowhere.com"; git config user.name "Moisei"'
 a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'

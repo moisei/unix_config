@@ -76,7 +76,7 @@ xterm*|rxvt*)
 esac
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-export POWERLINE_GO="${SCRIPT_DIR}/powerline-go-linux-amd64"
+# export POWERLINE_GO="${SCRIPT_DIR}/powerline-go-linux-amd64"
 function _update_ps1() {
     # STD 
     PS1="$($POWERLINE_GO -error $? -jobs $(jobs -p | wc -l))"
@@ -90,9 +90,9 @@ function _update_ps1() {
     #set "?"
 }
 
-if [ "$TERM" != "linux" ] && [ -f "${POWERLINE_GO}" ]; then
-    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
-fi
+# if [ "$TERM" != "linux" ] && [ -f "${POWERLINE_GO}" ]; then
+#    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+# fi
 
 
 # enable color support of ls and also add handy aliases

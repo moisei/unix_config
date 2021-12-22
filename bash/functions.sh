@@ -12,12 +12,14 @@ function dockersh () {
     if [ ! -z ${3+x} ]; then
         local arg_publish_port="-p $3:$3"
     fi
+#    set -x
+#            -v /etc/localtime:/etc/localtime:ro     \
+
     docker run --rm -it                         \
             -e HOME                                 \
             -e USER                                 \
             -e GOPATH                               \
             -v /usr/local/bin/terraform:/usr/local/bin/terraform:ro     \
-            -v /etc/localtime:/etc/localtime:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
             -v /etc/group:/etc/group:ro             \
@@ -33,7 +35,7 @@ typeset -xf dockersh
 function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf ngsh
 function nodejssh () { dockersh 'node' $*; }; typeset -xf nodejssh
 function tscsh ()    { dockersh 'webnews/tools/tsc:latest' $*; }; typeset -xf tscsh
-function tscsh14 ()    { dockersh 'webnews/tools/tsc:14.16' $*; }; typeset -xf tscsh14
+function tscsh14 ()  { dockersh 'webnews/tools/tsc:14.16' $*; }; typeset -xf tscsh14
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' $* ; }; typeset -xf gradlesh
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
@@ -44,7 +46,7 @@ function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 # https://github.com/mikefarah/yq
 # a lightweight and portable command-line YAML processor
 function duh () { du -hs $* | sort -h ; }; typeset -xf duh
-function yq () { docker run --rm -it -v ${PWD}:/workdir mikefarah/yq yq $* ; }; typeset -xf yq
+function yq ()  { docker run --rm -it -v ${PWD}:/workdir mikefarah/yq yq $* ; }; typeset -xf yq
 
 # share current folder to cifs
 # function winshare () {

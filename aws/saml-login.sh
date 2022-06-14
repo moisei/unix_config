@@ -46,6 +46,8 @@ generate_saml2aws_config() {
 ### main
 generate_saml2aws_config
 
+echo "AWS_DEFAULT_PROFILE: ${AWS_DEFAULT_PROFILE}"
+
 select acc in 'saml-master-admin' 'saml-master-r53' 'saml-research-admin' 'saml-infra-admin'
 do
     if [ -z ${AD_USER+x} ] ; then

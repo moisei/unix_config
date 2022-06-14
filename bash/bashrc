@@ -144,3 +144,5 @@ fi
 export AWS_DEFAULT_REGION=us-east-1
 export EDITOR=nano
 export GODEBUG=x509ignoreCN=0
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.krew/bin"

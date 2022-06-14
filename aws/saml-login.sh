@@ -1,0 +1,1 @@
+/home/svc/.aws/saml-login.sh

@@ -17,11 +17,12 @@
     br = branch
     unstage = reset HEAD --
     last = log -1 HEAD
+	l = log --pretty=format:\"%C(White)%h%C(Yellow)  %an%C(Green) %ad %C(White)%s\" --name-status --date=format:\"%d-%m-%Y %H:%M:%S\"
 [push]
 	default = simple
 [core]
-	excludesfile = /home/moisei/.gitignore_global
-	autocrlf = input
+	excludesfile = ~/.gitignore_global
+	autocrlf = false
 	whitespace = cr-at-eol
 [gpg]
 	program = gpg1

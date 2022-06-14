@@ -29,7 +29,7 @@ alias hg='history | grep -i'
 
 # git
 alias gst='git status'
-alias gl='git pull'
+# alias gl='git pull'
 alias gp='git push'
 alias gd='git diff | mate'
 alias gau='git add --update'
@@ -43,12 +43,14 @@ alias gcot='git checkout -t'
 alias gcotb='git checkout --track -b'
 alias glog='git log'
 alias glogp='git log --pretty=format:"%h %s" --graph'
-alias grso='git remote show origin'
+alias gl='git log --pretty=format:"%C(White)%h%C(Yellow)  %an%C(Green) %ad %C(White)%s" --name-status --date=format:"%d-%m-%Y %H:%M:%S"'
 
 alias ga='(git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"git \1\t\2"/ & alias | grep git) | sort'
 alias gag='ga | grep'
-ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
 alias gorig='git remote show origin'
+alias grso='git remote show origin'
+
+# todo github new repo: ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
 
 alias grepo='git init; git config user.email "moisei@nowhere.com"; git config user.name "Moisei"'
 alias grepobb='git init; git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
@@ -211,14 +213,14 @@ alias ua='gita pull'
 
 alias route_to_max='sudo route add -net 172.17.1.0 netmask 255.255.255.0 gw 172.18.1.1'
 
-# git pretty log
-a gl="git log --name-status --date-order --date=iso --full-history --all --pretty=format:'%C(yellow)%h %C(cyan)%ad%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08%x08 %C(bold blue)%aN%C(reset)%C(bold yellow)%d %C(reset)%s'"
 # aws creds from file
 a awsf='docker run --rm -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli aws'
 # aws shell
-a awss='docker run --rm -it -e AD_EMAIL -e AD_PASSWORD -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
+# a awss='docker run --rm -it -e AD_EMAIL -e AD_PASSWORD -v $(pwd):/aws -v ~/.aws:/root/.aws mikesir87/aws-cli'
+a awss='docker run --rm -it -e AD_EMAIL -e AD_PASSWORD -v $(pwd):/aws -w /aws -v ~/.aws:/root/.aws --entrypoint bash amazon/aws-cli'
 # aws creds from env
 a awse='docker run --rm -e AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN} -v $(pwd):/aws mikesir87/aws-cli aws'
+a awswhoami='aws sts get-caller-identity'
 
 # mount s3 bucket dalet-sandbox to /mnt/mydata
 a s3mount='sudo umount /mnt/s3fs &> /dev/null; docker rm -fv s3fs &> /dev/null; docker run -d --name s3fs -v ~/.s3fs:/root/.s3fs --security-opt apparmor:unconfined --cap-add mknod --cap-add sys_admin --device=/dev/fuse -v /mnt/s3fs:/mnt/mydata:shared xueshanf/s3fs /usr/bin/s3fs -f -o allow_other -o use_cache=/tmp -o passwd_file=/root/.s3fs -o use_path_request_style  'dalet-sandbox' /mnt/mydata'
@@ -263,4 +265,15 @@ a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'
 a gw='./gradlew'
 a s='source'
 a exp='explorer.exe .'
+
+a k='kubectl'
+a ka='kubectl get --all-namespaces'
+
+a st='steampipe'
+a stq='st query'
+a stj='stq --output json'
+
+
+
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
+

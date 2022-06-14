@@ -41,6 +41,7 @@ function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mv
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
 function gosh ()     { dockersh 'golang' $* ; }; typeset -xf gosh
 function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
+function awssh ()    { dockersh 'amazon/aws-cli' $* ; }; typeset -xf awssh
 
 
 # https://github.com/mikefarah/yq
@@ -93,3 +94,7 @@ function todel () {
     mv $* "$dir"
 }
 typeset -xf todel
+
+function kconf () { export KUBECONFIG="${1:-${PWD}/kubeconfig}" ; }; typeset -xf kconf
+function krmfin () { kubectl patch -n ${2:-default} ${1} --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]' ; }; typeset -xf krmfin
+

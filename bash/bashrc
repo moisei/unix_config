@@ -135,8 +135,8 @@ fi
 
 if [ $IS_WSL ]; then
     # https://medium.com/@ragin/development-under-windows-under-linux-with-wsl2-intellij-860daf601b61
-    WSL_ip_line=$(ipconfig.exe | grep "WSL" -n | awk -F ":" '{print $1+4}')
-    export DISPLAY=$(ipconfig.exe | awk -v a=$WSL_ip_line '{if (NR==a) print $NF":0.0"}' | tr -d "\r")
+    WSL_ip_line=$(/mnt/c/WINDOWS/system32/ipconfig.exe | grep "WSL" -n | awk -F ":" '{print $1+4}')
+    export DISPLAY=$(/mnt/c/WINDOWS/system32/ipconfig.exe | awk -v a=$WSL_ip_line '{if (NR==a) print $NF":0.0"}' | tr -d "\r")
     export LIBGL_ALWAYS_INDIRECT=1
     echo "DISPLAY IS: $DISPLAY"
 fi
@@ -144,3 +144,6 @@ fi
 export AWS_DEFAULT_REGION=us-east-1
 export EDITOR=nano
 export GODEBUG=x509ignoreCN=0
+
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.krew/bin

@@ -10,8 +10,8 @@ okta_url='https://dalet.okta.com/home/amazon_aws/0oa9uzqpknN4FFHQS357/272'
 aws_region=${AWS_DEFAULT_REGION:-'us-east-1'}
 
 profile=${SAML_PROFILE}
-if [[ -z ${profile+x} ]]; then
-    [[ ! -z ${AWS_DEFAULT_PROFILE+x} ]] && echo "Current AWS_DEFAULT_PROFILE is ${AWS_DEFAULT_PROFILE}"
+if [[ -z ${profile} ]]; then
+    [[ ! -z ${AWS_DEFAULT_PROFILE} ]] && echo "Current AWS_DEFAULT_PROFILE is ${AWS_DEFAULT_PROFILE}"
     select profile in "${!profiles[@]}"; do
         echo "logging in AWS with $profile profile"; 
         break; 
@@ -19,14 +19,14 @@ if [[ -z ${profile+x} ]]; then
 fi
 
 user=${SAML_USER}
-if [[ -z ${user+x} ]]; then
+if [[ -z ${user} ]]; then
     echo -n "User name without @dalet.com [${USER:-no-default}]: "
     read user
     user=${user:-${USER}}
 fi
 
 password=${SAML_PASSWORD}
-if [[ -z ${password+x} ]]; then
+if [[ -z ${password} ]]; then
     echo -n "${user}'s Password: "
     read -s password
     echo

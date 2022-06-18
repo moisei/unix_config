@@ -13,7 +13,11 @@ if [[ ! -z ${AWS_DEFAULT_PROFILE+x} ]]; then
   echo "Current AWS_DEFAULT_PROFILE is ${AWS_DEFAULT_PROFILE}"
 fi
 
-select profile in "${!profiles[@]}"; do echo "logging in AWS with $profile profile"; break; done
+if [[ ! -z ${SAML_PROFILE+x} ]]; then
+    profile=${SAML_PROFILE}
+else
+    select profile in "${!profiles[@]}"; do echo "logging in AWS with $profile profile"; break; done
+fi
 
 if [ -z ${AD_USER+x} ] ; then
     echo -n "User name without @dalet.com [${USER:-no-default}]: "
@@ -25,15 +29,14 @@ if [ -z ${AD_PASSWORD+x} ] ; then
     read -s AD_PASSWORD
     echo
 fi
-exit
 
 SAML2AWS_IDP_PROVIDER='Okta' saml2aws login                          \
     --skip-prompt                       \
     --force                             \
-    --idp-account "${profile_name}"     \
+    --idp-account "${profile}"     \
     --username "${AD_USER}@dalet.com"   \
     --password "${AD_PASSWORD}"         \
-    --profile "${profile_name}"         \
+    --profile "${profile}"         \
     --url "${okta_url}"                 \
     --mfa 'PUSH'                        \
     --aws-urn 'urn:amazon:webservices'  \

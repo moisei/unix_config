@@ -195,6 +195,7 @@ alias ll='LC_COLLATE=C ls -alF'
 alias l='LC_COLLATE=C ls -lF'
 alias lld='ll --group-directories-first'
 alias ld='l --group-directories-first'
+alias lg='l | g'
 
 alias duh='du -h * | sort -n'
 alias duhs='du -sh * | sort -n'
@@ -268,6 +269,7 @@ a exp='explorer.exe .'
 
 a k='kubectl'
 a ka='kubectl get --all-namespaces'
+kconf='export KUBECONFIG=$PWD/kubeconfig'
 
 a st='steampipe'
 a stq='st query'

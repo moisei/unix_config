@@ -276,6 +276,11 @@ a stq='st query'
 a stj='stq --output json'
 
 
+a trivy='docker run --rm -it  -v /var/run/docker.sock:/var/run/docker.sock -v ~/.trivy/cache:/.trivy/cache -v $PWD:/work aquasec/trivy --cache-dir /.trivy/cache'
+# a trivy='docker run --rm -it -u `id -u`:`id -g` -v /var/run/docker.sock:/var/run/docker.sock -v ~/.trivy/cache:/.trivy/cache -v $PWD:/work --cache-dir aquasec/trivy --cache-dir /.trivy/cache'
+#__trivy_tmpl__='{{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- $low := 0 }}{{- range . }}{{- range .Vulnerabilities }}{{- if  eq .Severity "CRITICAL" }}{{- $critical = add $critical 1 }}{{- end }}{{- if  eq .Severity "HIGH" }}{{- $high = add $high 1 }}{{- end }}{{- end }}{{- end }}Critical: {{ $critical }}, High: {{ $high }},  Medium: {{ $medium }}, Low: {{ $low }}, {{printf "\n"}}'
+__trivy_tmpl__='{{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- $low := 0 }}{{- range . }}{{- range .Vulnerabilities }}{{- if  eq .Severity "CRITICAL" }}{{- $critical = add $critical 1 }}{{- end }}{{- if  eq .Severity "HIGH" }}{{- $high = add $high 1 }}{{- end }}{{- if  eq .Severity "MEDIUM" }}{{- $medium = add $medium 1 }}{{- end }}{{- if  eq .Severity "LOW" }}{{- $low = add $low 1 }}{{- end }}{{- end }}{{- end }}Critical: {{ $critical }}, High: {{ $high }},  Medium: {{ $medium }}, Low: {{ $low }}, {{printf "\n"}}'
+a trs='trivy image --format template --template "$__trivy_tmpl__"'
 
+a trsi='trivy image'
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
-

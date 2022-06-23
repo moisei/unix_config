@@ -42,6 +42,7 @@ function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
 function gosh ()     { dockersh 'golang' $* ; }; typeset -xf gosh
 function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 function awssh ()    { dockersh 'amazon/aws-cli' $* ; }; typeset -xf awssh
+function trivysh ()  { dockersh 'aquasec/trivy' $* ; }; typeset -xf trivysh
 
 
 # https://github.com/mikefarah/yq

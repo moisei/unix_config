@@ -206,6 +206,7 @@ alias df.='df -h .'
 alias deld='rm -rf'
 alias ag='alias | grep'
 alias psg='ps -aef | grep'
+alias pg='pgrep -af'
 alias subgit='docker run --rm -v $PWD:$PWD -w $PWD "dalet/subgit:1" subgit'
 
 alias gita='git -C $USER_CFG_DIR'
@@ -269,7 +270,6 @@ a exp='explorer.exe .'
 
 a k='kubectl'
 a ka='kubectl get --all-namespaces'
-kconf='export KUBECONFIG=$PWD/kubeconfig'
 
 a st='steampipe'
 a stq='st query'
@@ -284,3 +284,8 @@ a trs='trivy image --format template --template "$__trivy_tmpl__"'
 
 a trsi='trivy image'
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
+
+a tp='telepresence'
+a tp-daemon='rm -rf "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"; mkdir "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"; sudo "/usr/local/bin/telepresence" daemon-foreground "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"'
+a tpq='tp quit -u'
+

@@ -27,3 +27,6 @@
 #	whitespace = cr-at-eol
 [gpg]
 	program = gpg1
+[user]
+	name = Moisei Rabinovich
+	email = mrabinovitch@dalet.com

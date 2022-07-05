@@ -5,6 +5,9 @@ profiles['saml-infra-admin']='arn:aws:iam::894385683132:role/infrastructure_admi
 profiles['saml-master-admin']='arn:aws:iam::614323077724:role/master_admin'
 profiles['saml-master-r53']='arn:aws:iam::614323077724:role/master_r53_admin'
 profiles['saml-research-admin']='arn:aws:iam::209572697859:role/research_admin_admin'
+profiles['saml-sanity-admin']='arn:aws:iam::816912755130:role/sanity_admin'
+# profiles['saml-xxx']='arn:aws:iam::xxx::role/xxx'
+
 
 okta_url='https://dalet.okta.com/home/amazon_aws/0oa9uzqpknN4FFHQS357/272'
 aws_region=${AWS_DEFAULT_REGION:-'us-east-1'}
@@ -13,8 +16,8 @@ profile=${SAML_PROFILE}
 if [[ -z ${profile} ]]; then
     [[ ! -z ${AWS_DEFAULT_PROFILE} ]] && echo "Current AWS_DEFAULT_PROFILE is ${AWS_DEFAULT_PROFILE}"
     select profile in "${!profiles[@]}"; do
-        echo "logging in AWS with $profile profile"; 
-        break; 
+        echo "logging in AWS with $profile profile";
+        break;
     done
 fi
 
@@ -32,6 +35,7 @@ if [[ -z ${password} ]]; then
     echo
 fi
 
+echo "Conection as: ${user}@dalet.com with ${profiles[$profile]}"
 SAML2AWS_IDP_PROVIDER='Okta' saml2aws login \
     --skip-prompt                           \
     --force                                 \

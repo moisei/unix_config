@@ -195,6 +195,7 @@ alias ll='LC_COLLATE=C ls -alF'
 alias l='LC_COLLATE=C ls -lF'
 alias lld='ll --group-directories-first'
 alias ld='l --group-directories-first'
+alias lg='l | g'
 
 alias duh='du -h * | sort -n'
 alias duhs='du -sh * | sort -n'
@@ -205,6 +206,7 @@ alias df.='df -h .'
 alias deld='rm -rf'
 alias ag='alias | grep'
 alias psg='ps -aef | grep'
+alias pg='pgrep -af'
 alias subgit='docker run --rm -v $PWD:$PWD -w $PWD "dalet/subgit:1" subgit'
 
 alias gita='git -C $USER_CFG_DIR'
@@ -274,6 +276,16 @@ a stq='st query'
 a stj='stq --output json'
 
 
+a trivy='docker run --rm -it  -v /var/run/docker.sock:/var/run/docker.sock -v ~/.trivy/cache:/.trivy/cache -v $PWD:/work aquasec/trivy --cache-dir /.trivy/cache'
+# a trivy='docker run --rm -it -u `id -u`:`id -g` -v /var/run/docker.sock:/var/run/docker.sock -v ~/.trivy/cache:/.trivy/cache -v $PWD:/work --cache-dir aquasec/trivy --cache-dir /.trivy/cache'
+#__trivy_tmpl__='{{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- $low := 0 }}{{- range . }}{{- range .Vulnerabilities }}{{- if  eq .Severity "CRITICAL" }}{{- $critical = add $critical 1 }}{{- end }}{{- if  eq .Severity "HIGH" }}{{- $high = add $high 1 }}{{- end }}{{- end }}{{- end }}Critical: {{ $critical }}, High: {{ $high }},  Medium: {{ $medium }}, Low: {{ $low }}, {{printf "\n"}}'
+__trivy_tmpl__='{{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- $low := 0 }}{{- range . }}{{- range .Vulnerabilities }}{{- if  eq .Severity "CRITICAL" }}{{- $critical = add $critical 1 }}{{- end }}{{- if  eq .Severity "HIGH" }}{{- $high = add $high 1 }}{{- end }}{{- if  eq .Severity "MEDIUM" }}{{- $medium = add $medium 1 }}{{- end }}{{- if  eq .Severity "LOW" }}{{- $low = add $low 1 }}{{- end }}{{- end }}{{- end }}Critical: {{ $critical }}, High: {{ $high }},  Medium: {{ $medium }}, Low: {{ $low }}, {{printf "\n"}}'
+a trs='trivy image --format template --template "$__trivy_tmpl__"'
 
+a trsi='trivy image'
 source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
+
+a tp='telepresence'
+a tp-daemon='rm -rf "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"; mkdir "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"; sudo "/usr/local/bin/telepresence" daemon-foreground "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"'
+a tpq='tp quit -u'
 

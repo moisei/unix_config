@@ -22,7 +22,11 @@
 	default = simple
 [core]
 	excludesfile = ~/.gitignore_global
-	autocrlf = false
-	whitespace = cr-at-eol
+	autocrlf = input
+        # safecrlf false
+#	whitespace = cr-at-eol
 [gpg]
 	program = gpg1
+[user]
+	name = Moisei Rabinovich
+	email = mrabinovitch@dalet.com

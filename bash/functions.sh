@@ -19,6 +19,7 @@ function dockersh () {
             -e HOME                                 \
             -e USER                                 \
             -e GOPATH                               \
+            -e KUBECONFIG                           \
             -v /usr/local/bin/terraform:/usr/local/bin/terraform:ro     \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
@@ -29,8 +30,7 @@ function dockersh () {
             $arg_publish_port                       \
             --entrypoint $entrypoint                \
         $image
-}
-typeset -xf dockersh
+}; typeset -xf dockersh
 
 function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf ngsh
 function nodejssh () { dockersh 'node' $*; }; typeset -xf nodejssh
@@ -42,6 +42,7 @@ function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
 function gosh ()     { dockersh 'golang' $* ; }; typeset -xf gosh
 function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 function awssh ()    { dockersh 'amazon/aws-cli' $* ; }; typeset -xf awssh
+function trivysh ()  { sudo chown -R svc:svc /home/svc/.trivy; dockersh 'aquasec/trivy' 'sh' ; }; typeset -xf trivysh
 
 
 # https://github.com/mikefarah/yq
@@ -85,16 +86,17 @@ function winshare () {
             -s "${DIR};${REMOTE_DIR}" \
             -p
     echo "net use \\\\`hostname -i`\\$DIR /USER:$USER $USER"
-}
-typeset -xf winshare
+}; typeset -xf winshare
 
 function todel () {
     local dir="$HOME/.todel/`date +%Y-%m-%d`"
     mkdir -p "$dir"
     mv $* "$dir"
-}
-typeset -xf todel
+}; typeset -xf todel
 
-function kconf () { export KUBECONFIG="${1:-${PWD}/kubeconfig}" ; }; typeset -xf kconf
+function kconf () {
+    export KUBECONFIG="${1:-${PWD}/kubeconfig}"
+    echo $KUBECONFIG
+    kubectl cluster-info
+}; typeset -xf kconf
 function krmfin () { kubectl patch -n ${2:-default} ${1} --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]' ; }; typeset -xf krmfin
-

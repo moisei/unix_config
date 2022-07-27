@@ -253,10 +253,10 @@ a tf='terraform'
 
 # WSL
 if [ $IS_WSL ]; then
-    a c='"/mnt/c/Program Files/Microsoft VS Code/Code.exe" &> /dev/null'
-    a cc='c .&'
-    a code='nohup bash "/mnt/c/Program Files/Microsoft VS Code/bin/code" . &> "/tmp/nohup-code-`basename $PWD`-`date +%Y-%m-%d-%H-%M-%S`.out" &'
-
+    a code='"/mnt/c/Program Files/Microsoft VS Code/bin/code"'
+    a c='code &> /dev/null'
+    a c.='code "${PWD}" &> /dev/null &'
+    a cnh='nohup bash "/mnt/c/Program Files/Microsoft VS Code/bin/code" . &> "/tmp/nohup-code-`basename $PWD`-`date +%Y-%m-%d-%H-%M-%S`.out" &'
 fi
 
 a psg='ps aux | grep -v " grep " | grep -i'
@@ -266,7 +266,8 @@ a ghuser='git config user.email "moisei@nowhere.com"; git config user.name "Mois
 a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'
 a gw='./gradlew'
 a s='source'
-a exp='explorer.exe .'
+a exp='explorer.exe'
+a e.='explorer.exe .'
 
 a k='kubectl'
 a ka='kubectl get --all-namespaces'

@@ -12,15 +12,18 @@ function dockersh () {
     if [ ! -z ${3+x} ]; then
         local arg_publish_port="-p $3:$3"
     fi
+    if [[ $image == "*:latest" ]] ; then
+        docker pull $image
+    fi
 #    set -x
 #            -v /etc/localtime:/etc/localtime:ro     \
 
-    docker run --rm -it                         \
+    docker run --rm -it                             \
             -e HOME                                 \
             -e USER                                 \
             -e GOPATH                               \
             -e KUBECONFIG                           \
-            -v /usr/local/bin/terraform:/usr/local/bin/terraform:ro     \
+            -v '/usr/local/bin/terraform':'/usr/local/bin/terraform:ro'    \
             -v /etc/localzone:/etc/localzone:ro     \
             -v /etc/passwd:/etc/passwd:ro           \
             -v /etc/group:/etc/group:ro             \
@@ -40,6 +43,7 @@ function gradlesh () { dockersh 'gradle:6.2.2-jdk11' $* ; }; typeset -xf gradles
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
 function gosh ()     { dockersh 'golang' $* ; }; typeset -xf gosh
+function goopsh ()     { dockersh 'go-operator-build-env' $* ; }; typeset -xf goopsh
 function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 function awssh ()    { dockersh 'amazon/aws-cli' $* ; }; typeset -xf awssh
 function trivysh ()  { sudo chown -R svc:svc /home/svc/.trivy; dockersh 'aquasec/trivy' 'sh' ; }; typeset -xf trivysh
@@ -98,5 +102,6 @@ function kconf () {
     export KUBECONFIG="${1:-${PWD}/kubeconfig}"
     echo $KUBECONFIG
     kubectl cluster-info
+    kubectl get nodes
 }; typeset -xf kconf
 function krmfin () { kubectl patch -n ${2:-default} ${1} --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]' ; }; typeset -xf krmfin

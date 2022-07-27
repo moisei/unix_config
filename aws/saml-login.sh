@@ -12,9 +12,6 @@ LAST_LOGIN_ENV_FILE="${HOME}/.saml-login-last"
 
 [ -f "${LAST_LOGIN_ENV_FILE}" ] && source $LAST_LOGIN_ENV_FILE
 
-echo JOPA:$JOPA
-exit
-
 aws_region=${AWS_DEFAULT_REGION:-'us-east-1'}
 profile=${SAML_PROFILE}
 if [[ -z ${profile} ]]; then

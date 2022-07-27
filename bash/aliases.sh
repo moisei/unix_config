@@ -253,10 +253,10 @@ a tf='terraform'
 
 # WSL
 if [ $IS_WSL ]; then
-    a c='"/mnt/c/Program Files/Microsoft VS Code/Code.exe" &> /dev/null'
+    a c='"/mnt/c/Program Files/Microsoft VS Code/bin/code" &> /dev/null'
     a cc='c .&'
+    a c.='cc'
     a code='nohup bash "/mnt/c/Program Files/Microsoft VS Code/bin/code" . &> "/tmp/nohup-code-`basename $PWD`-`date +%Y-%m-%d-%H-%M-%S`.out" &'
-
 fi
 
 a psg='ps aux | grep -v " grep " | grep -i'

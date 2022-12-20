@@ -1,11 +1,12 @@
-USER_CFG_DIR=$HOME/.config_private
-
 # bash
 alias a="alias"
-# a docker='podman'
-alias ra="source $USER_CFG_DIR/bash/aliases.sh"
-alias ef="nano $USER_CFG_DIR/bash/functions.sh"
-alias ea="nano $USER_CFG_DIR/bash/aliases.sh"
+
+alias ra="source $CUSTOM_CONFIG_DIR/bash/aliases.sh"
+alias ef="nano $CUSTOM_CONFIG_DIR/bash/functions.sh"
+alias ea="nano $CUSTOM_CONFIG_DIR/bash/aliases.sh"
+alias gita='git -C $CUSTOM_CONFIG_DIR'
+alias pa='gita commit -a -m "." && gita push'
+alias ua='gita pull'
 
 alias del="rm"
 alias ren="mv"
@@ -208,10 +209,6 @@ alias ag='alias | grep'
 alias psg='ps -aef | grep'
 alias pg='pgrep -af'
 alias subgit='docker run --rm -v $PWD:$PWD -w $PWD "dalet/subgit:1" subgit'
-
-alias gita='git -C $USER_CFG_DIR'
-alias pa='gita commit -a -m "." && gita push'
-alias ua='gita pull'
 
 alias route_to_max='sudo route add -net 172.17.1.0 netmask 255.255.255.0 gw 172.18.1.1'
 

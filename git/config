@@ -11,7 +11,6 @@
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
     bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
     bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
-
     st = status
     ci = commit
     br = branch
@@ -23,16 +22,11 @@
 [core]
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
-        # safecrlf false
-#	whitespace = cr-at-eol
+    # safecrlf false
+    # whitespace = cr-at-eol
 [gpg]
 	program = gpg1
-[user]
-	name = Moisei Rabinovich
-	email = mrabinovitch@dalet.com
 [credential "https://github.com"]
-	helper = 
 	helper = !/usr/local/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
 	helper = !/usr/local/bin/gh auth git-credential

@@ -1,27 +1,19 @@
 #!/bin/bash
 
-if [ -d ~/.config_private ]; then
-   echo "~/.config_private exists. Exiting"
-   exit 1
-fi
-if [ -d ~/.config_original ]; then
-   echo "~/.config_original exists. Exiting"
+set -eu
+
+local_config_dir=~/.local/config
+original_config_dir=~/.local/config_original
+if [ -d $local_config_dir ] || [ -d $original_config_dir ]; then
+   echo "$local_config_dir or $original_config_dir exist. Exiting"
    exit 1
 fi
 
-# git clone git@github.com:moisei/unix_config.git ~/.config_private
-git clone https://github.com/moisei/unix_config.git ~/.config_private
-if [ ! -d ~/.config_private ]; then
-   echo "~/.config_private does not exist after clone. Exiting"
-   exit 1
-fi
+mkdir -p ~/.local
+# git clone git@github.com:moisei/unix_config.git $local_config_dir
+git clone https://github.com/moisei/unix_config.git $local_config_dir
+mkdir -p $original_config_dir
+mv ~/.profile ~/.bash_profile ~/.bashrc ~/.gitconfig "${original_config_dir}" &> /dev/null || echo .
 
-mkdir ~/.config_original
-if [ ! -d ~/.config_original ]; then
-   echo "~/.config_original does not exist after mkdir. Exiting"
-   exit 1
-fi
-mv ~/.profile ~/.bash_profile ~/.bashrc ~/.gitconfig ~/.config_original &> /dev/null
-
-ln -s ~/.config_private/bash/profile ~/.profile
-ln -s ~/.config_private/git/gitconfig  ~/.gitconfig
+ln -s "${local_config_dir}/bash/profile" ~/.profile
+ln -s "${local_config_dir}/bash/git/gitconfig"  ~/.gitconfig

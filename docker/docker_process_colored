@@ -4,4 +4,3 @@ docker inspect --format='{{.Name}}' $(docker ps -q | xargs) | \
 	sed 's/[^a-zA-Z0-9-]//' | \
 	awk '{ printf "%s: docker logs -f %s\n", $1, $1 }' | \
 	foreman start -f /dev/stdin
-

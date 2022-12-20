@@ -8,14 +8,11 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-USER_CFG_DIR=$HOME/.config_private
-
-echo "USER_CFG_DIR is: $USER_CFG_DIR"
-
-# if running bash include .bashrc if it exists
+# if running bash
 if [ -n "$BASH_VERSION" ]; then
-    if [ -f "$USER_CFG_DIR/bash/bashrc" ]; then
-	. "$USER_CFG_DIR/bash/bashrc"
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+        . "$HOME/.bashrc"
     fi
 fi
 
@@ -24,5 +21,7 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi

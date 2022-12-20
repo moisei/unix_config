@@ -15,8 +15,6 @@ function dockersh () {
     if [[ $image == "*:latest" ]] ; then
         docker pull $image
     fi
-#    set -x
-#            -v /etc/localtime:/etc/localtime:ro     \
 
     docker run --rm -it                             \
             -e HOME                                 \
@@ -48,11 +46,6 @@ function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 function awssh ()    { dockersh 'amazon/aws-cli' $* ; }; typeset -xf awssh
 function trivysh ()  { sudo chown -R svc:svc /home/svc/.trivy; dockersh 'aquasec/trivy' 'sh' ; }; typeset -xf trivysh
 
-
-# https://github.com/mikefarah/yq
-# a lightweight and portable command-line YAML processor
-function duh () { du -hs $* | sort -h ; }; typeset -xf duh
-function yq ()  { docker run --rm -it -v ${PWD}:/workdir mikefarah/yq yq $* ; }; typeset -xf yq
 
 # share current folder to cifs
 # function winshare () {
@@ -87,7 +80,7 @@ function winshare () {
             -v ${LOCAL_DIR}:${REMOTE_DIR}   \
         dperson/samba                       \
             -u "${USER};${PASSWORD}"        \
-            -s "${DIR};${REMOTE_DIR}" \
+            -s "${DIR};${REMOTE_DIR}"       \
             -p
     echo "net use \\\\`hostname -i`\\$DIR /USER:$USER $USER"
 }; typeset -xf winshare
@@ -104,4 +97,12 @@ function kconf () {
     kubectl cluster-info
     kubectl get nodes
 }; typeset -xf kconf
-function krmfin () { kubectl patch -n ${2:-default} ${1} --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]' ; }; typeset -xf krmfin
+
+function krmfin () { 
+    kubectl patch -n ${2:-default} ${1} --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]'
+}; typeset -xf krmfin
+
+# https://github.com/mikefarah/yq
+# a lightweight and portable command-line YAML processor
+function duh () { du -hs $* | sort -h ; }; typeset -xf duh
+function yq ()  { docker run --rm -it -v "${PWD}:/workdir" mikefarah/yq yq $* ; }; typeset -xf yq

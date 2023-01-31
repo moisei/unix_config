@@ -9,10 +9,15 @@ function dockersh () {
     local container_port=$3
     local arg_publish_port
 
-    if [ ! -z ${3+x} ]; then
-        local arg_publish_port="-p $3:$3"
+    if [ ! -z ${container_port} ]; then
+        local arg_publish_port="-p ${container_port}:${container_port}"
     fi
-    if [[ $image == "*:latest" ]] ; then
+	echo "args: $*"
+    shift
+    shift
+    shift
+	echo "args: $*"
+    if [[ $image == "*:latest" ]]; then
         docker pull $image
     fi
 #    set -x
@@ -32,22 +37,25 @@ function dockersh () {
             -w $PWD                                 \
             $arg_publish_port                       \
             --entrypoint $entrypoint                \
-        $image
+        $image                                      \
+            $*
+
 }; typeset -xf dockersh
+# set +x
 
 function ngsh ()     { dockersh 'trion/ng-cli:latest' 'bash' '4200'; }; typeset -xf ngsh
 function nodejssh () { dockersh 'node' $*; }; typeset -xf nodejssh
-function tscsh ()    { dockersh 'webnews/tools/tsc:latest' $*; }; typeset -xf tscsh
-function tscsh14 ()  { dockersh 'webnews/tools/tsc:14.16' $*; }; typeset -xf tscsh14
+# function tscsh ()    { dockersh 'webnews/tools/tsc:latest' $*; }; typeset -xf tscsh
+function tscsh14 ()  { dockersh 'harbor.devportal.dalet.cloud/webnews/tools/tsc:14.16' $*; }; typeset -xf tscsh14
 function gradlesh () { dockersh 'gradle:6.2.2-jdk11' $* ; }; typeset -xf gradlesh
 function mvnsh ()    { dockersh 'maven:3-adoptopenjdk-11' $* ; }; typeset -xf mvnsh
 function pythonsh () { dockersh 'python:alpine' 'sh' ; }; typeset -xf pythonsh
 function gosh ()     { dockersh 'golang' $* ; }; typeset -xf gosh
-function goopsh ()     { dockersh 'go-operator-build-env' $* ; }; typeset -xf goopsh
+function goopsh ()   { dockersh 'go-operator-build-env' $* ; }; typeset -xf goopsh
 function cppsh ()    { dockersh 'grpc-dev' $* ; }; typeset -xf cppsh
 function awssh ()    { dockersh 'amazon/aws-cli' $* ; }; typeset -xf awssh
 function trivysh ()  { sudo chown -R svc:svc /home/svc/.trivy; dockersh 'aquasec/trivy' 'sh' ; }; typeset -xf trivysh
-
+function awscppsh () { dockersh 'andykirkham/aws-sdk-cpp:aws-sdk-cpp-static-useful-1.9.305' $* ; }; typeset -xf awscppsh
 
 # https://github.com/mikefarah/yq
 # a lightweight and portable command-line YAML processor
@@ -105,3 +113,6 @@ function kconf () {
     kubectl get nodes
 }; typeset -xf kconf
 function krmfin () { kubectl patch -n ${2:-default} ${1} --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]' ; }; typeset -xf krmfin
+function bbclone () { git clone "git@bitbucket.org:ooyalaflex/$1" $2 ; }; typeset -xf bbclone
+function dcps() { dc ps --format json | jq -j '.[] | .Service, "\t", .State, "\t", .ExitCode, "\t", .Health, "\n"' | sort | column -t ; }; typeset -xf dcps
+function dcpsf() { dcps | grep -v "running.*0$" | grep -v "running.*0.*healthy$" | grep -v "exited.*0$"; } ; typeset -xf dcpsf

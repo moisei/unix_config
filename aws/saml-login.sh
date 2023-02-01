@@ -1,10 +1,12 @@
 #!/bin/bash
 
 declare -A profiles=()
-profiles['saml-infra-admin']='arn:aws:iam::894385683132:role/infrastructure_admin'
-profiles['saml-master-admin']='arn:aws:iam::614323077724:role/master_admin'
+profiles['saml-research-dev']='arn:aws:iam::209572697859:role/research_admin_dev'
 profiles['saml-master-r53']='arn:aws:iam::614323077724:role/master_r53_admin'
-profiles['saml-research-admin']='arn:aws:iam::209572697859:role/research_admin_admin'
+# profiles['saml-infra-admin']='arn:aws:iam::894385683132:role/infrastructure_admin'
+# profiles['saml-master-admin']='arn:aws:iam::614323077724:role/master_admin'
+# profiles['saml-research-admin']='arn:aws:iam::209572697859:role/research_admin_admin'
+profiles['saml-storefront-admin']='arn:aws:iam::474346169220:role/store_front_dev_admin'
 
 okta_url='https://dalet.okta.com/home/amazon_aws/0oa9uzqpknN4FFHQS357/272'
 LAST_LOGIN_ENV_FILE="${HOME}/.saml-login-last"

@@ -47,8 +47,7 @@ alias gl='git log --pretty=format:"%C(White)%h%C(Yellow)  %an%C(Green) %ad %C(Wh
 
 alias ga='(git config --get-regexp alias | sed -r s/"alias\.([^ ]+) (.*)"/"git \1\t\2"/ & alias | grep git) | sort'
 alias gag='ga | grep'
-alias gorig='git remote show origin'
-alias grso='git remote show origin'
+alias gorig='git remote get-url origin'
 
 # todo github new repo: ghnew() { curl -u 'moisei' https://api.github.com/user/repos -d '{"name":"askbot-devel"}' ;}
 
@@ -265,7 +264,7 @@ a psg='ps aux | grep -v " grep " | grep -i'
 # a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"; git config core.autocrlf true'
 a bbuser='git config user.email "mrabinovitch@dalet.com"; git config user.name "Moisei Rabinovich"'
 a ghuser='git config user.email "moisei@nowhere.com"; git config user.name "Moisei"'
-a idea='nohup ~/.jetbrains/jb/idea . &> /dev/null&'
+a idea='nohup idea . &> $(mktemp /tmp/idea.XXXXXXXXX)&'
 a gw='./gradlew'
 a s='source'
 a exp='explorer.exe'
@@ -286,9 +285,11 @@ __trivy_tmpl__='{{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- $lo
 a trs='trivy image --format template --template "$__trivy_tmpl__"'
 
 a trsi='trivy image'
-source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
 
 a tp='telepresence'
 a tp-daemon='rm -rf "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"; mkdir "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"; sudo "/usr/local/bin/telepresence" daemon-foreground "$HOME/.cache/telepresence/logs" "$HOME/.config/telepresence"'
 a tpq='tp quit -u'
 
+###
+source "`dirname ${BASH_SOURCE[0]}`/functions.sh"
+###

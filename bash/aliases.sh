@@ -186,7 +186,9 @@ alias dcdownf='dc down -v --remove-orphans'
 alias dcreup='dcdown; dcup'
 alias dcreupb='dcdown; dcup --build'
 alias dcreupf='dcdownf; dcup'
+alias dcl='dc logs'
 alias dclf='dc logs -f'
+alias dclnc='dc logs --no-log-prefix --no-color'
 
 alias ds='docker service'
 

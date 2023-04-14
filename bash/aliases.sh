@@ -198,8 +198,9 @@ alias lld='ll --group-directories-first'
 alias ld='l --group-directories-first'
 alias lg='l | g'
 
-alias duh='du -h * | sort -n'
-alias duhs='du -sh * | sort -n'
+alias du.='du -hs .'
+alias duh='du -h * | sort -h'
+alias duhs='du -sh * | sort -h'
 
 
 alias df='df -h'
@@ -254,7 +255,8 @@ a tf='terraform'
 
 # WSL
 if [ $IS_WSL ]; then
-    a code='"/mnt/c/Program Files/Microsoft VS Code/bin/code"'
+#    a code='"/mnt/c/Program Files/Microsoft VS Code/bin/code"'
+    a code='"/mnt/c/Users/moise/AppData/Local/Programs/Microsoft VS Code/bin/code"'
     a c='code &> /dev/null'
     a c.='code "${PWD}" &> /dev/null &'
     a cnh='nohup bash "/mnt/c/Program Files/Microsoft VS Code/bin/code" . &> "/tmp/nohup-code-`basename $PWD`-`date +%Y-%m-%d-%H-%M-%S`.out" &'
